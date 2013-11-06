@@ -10,8 +10,11 @@ public class menu extends JFrame implements ActionListener{
 	Container c = getContentPane();	
 	JPanel menu = new JPanel();
 	JPanel head = new JPanel();
-	JPanel playerNames = new JPanel();
-	JButton startGame;
+	JPanel playerName = new JPanel();
+	JButton startGame, setPlayerName;
+	JTextField playerNameField;
+
+	static String p = "Player"; //standard player1 name
 
 	public menu() throws IOException {
 		
@@ -22,8 +25,15 @@ public class menu extends JFrame implements ActionListener{
 		header.setFont(new Font("SanSerif", Font.PLAIN, 99));
 		
 		startGame = new JButton("Play game");
+		setPlayerName = new JButton("Set player name");
+
+		playerNameField = new JTextField("Player name", 15);
 
 		startGame.addActionListener(this);
+		setPlayerName.addActionListener(this);
+
+		playerName.add(playerNameField);
+		playerName.add(setPlayerName);
 
 		head.add(header);
 		menu.add(start);
@@ -35,7 +45,7 @@ public class menu extends JFrame implements ActionListener{
 	    c.setLayout(new BorderLayout());
 	    c.add(head, BorderLayout.NORTH);
 	    c.add(menu, BorderLayout.CENTER);
-	    c.add(playerNames, BorderLayout.SOUTH);
+	    c.add(playerName, BorderLayout.SOUTH);
 	    
 	    pack();
 	    setLocationRelativeTo(null); //makes the window will open in center of screen
@@ -59,10 +69,22 @@ public class menu extends JFrame implements ActionListener{
 				e1.printStackTrace();
 			}
 		}
+				//if set player name is clicked
+		else if(e.getSource() == setPlayerName){
+			//checks that p1 textField isn't empty
+			if(!playerNameField.getText().equals(""))
+				p = playerNameField.getText();
+			else
+				p = "Player"; // sets player 2 name to "Blå" if the TextField is empty
+		}
 		
 		//Highscores?
 		else{
 			
 		}
 	}	
+
+	public static String getPlayerName(){
+		return p;
+	}
 }
