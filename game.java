@@ -1,8 +1,11 @@
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.*;
+
 import javax.swing.border.LineBorder;
+
 import java.util.Arrays;
 import java.io.*;
 
@@ -25,7 +28,7 @@ public class game extends JFrame implements ActionListener{
 	//Mini games
 	private static int NUMBEROFGAMES = 1;
 	private int miniGames[] = new int[NUMBEROFGAMES];
-	private int currentGame = 0;
+	private double currentGame = 0;
 	
 	public game() throws IOException {
 		//header
@@ -64,7 +67,27 @@ public class game extends JFrame implements ActionListener{
 	}
 
 	public void runGame() {
-		currentGame;
+		currentGame++;
+	}
+	
+	public void timerOver() {
+		
+	}
+	
+   class CountdownTimerListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+			if (--time > 0) {
+                timeLeft.setText(String.valueOf(time));
+            } else {
+                timeLeft.setText("Time's up, bitch!");
+                timer.stop();
+                timerOver();
+            }
+        }
+    }
+
+	public void actionPerformed(ActionEvent e) {
+		
 	}
 
 }

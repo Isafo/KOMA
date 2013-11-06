@@ -4,7 +4,7 @@ import java.awt.event.*;
 import java.io.IOException;
 
 
-public class Menu extends JFrame implements ActionListener{
+public class menu extends JFrame implements ActionListener{
 	
 	
 	Container c = getContentPane();	
@@ -13,7 +13,7 @@ public class Menu extends JFrame implements ActionListener{
 	JPanel playerNames = new JPanel();
 	JButton startGame;
 
-	public Menu() throws IOException {
+	public menu() throws IOException {
 		
 		FlowLayout flow = new FlowLayout();
 		
@@ -40,7 +40,7 @@ public class Menu extends JFrame implements ActionListener{
 	    pack();
 	    setLocationRelativeTo(null); //makes the window will open in center of screen
 	    setResizable(false);
-	    setTitle("Fyra i Rad, jao");
+	    setTitle("OKLART");
 	    setVisible(true);
 	    setDefaultCloseOperation(EXIT_ON_CLOSE);	
 	}
@@ -52,7 +52,12 @@ public class Menu extends JFrame implements ActionListener{
 
 		//if startGame button is clicked
 		if(e.getSource() == startGame){
-			
+			try {
+				game theGame = new game();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 		
 		//Highscores?
