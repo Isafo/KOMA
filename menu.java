@@ -1,19 +1,20 @@
+
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
 
-
-public class Menu extends JFrame implements ActionListener{
+public class menu extends JFrame implements MouseListener{
 	
 	
 	Container c = getContentPane();	
 	JPanel menu = new JPanel();
 	JPanel head = new JPanel();
 	JPanel playerNames = new JPanel();
-	JButton startGame;
+	JLabel startGame;
 
-	public Menu() throws IOException {
+	public menu() throws IOException {
 		
 		FlowLayout flow = new FlowLayout();
 		
@@ -21,13 +22,13 @@ public class Menu extends JFrame implements ActionListener{
 		JLabel header = new JLabel("KOMA", JLabel.CENTER);
 		header.setFont(new Font("SanSerif", Font.PLAIN, 99));
 		
-		startGame = new JButton("Play game");
-
-		startGame.addActionListener(this);
+		startGame = new JLabel("Play game");
+		startGame.setFont(new Font("SanSerif", Font.PLAIN, 30));
+		startGame.addMouseListener(this);
 
 		head.add(header);
 		menu.add(start);
-		menu.add(startGame);		
+		menu.add(startGame);
 		menu.setLayout(flow);
 		menu.setPreferredSize(new Dimension(150, 150));
 		
@@ -37,10 +38,10 @@ public class Menu extends JFrame implements ActionListener{
 	    c.add(menu, BorderLayout.CENTER);
 	    c.add(playerNames, BorderLayout.SOUTH);
 	    
-	    pack();
+	    setSize(600,600);
 	    setLocationRelativeTo(null); //makes the window will open in center of screen
 	    setResizable(false);
-	    setTitle("Fyra i Rad, jao");
+	    setTitle("Awesome game!");
 	    setVisible(true);
 	    setDefaultCloseOperation(EXIT_ON_CLOSE);	
 	}
@@ -50,14 +51,26 @@ public class Menu extends JFrame implements ActionListener{
 	*/
 	public void actionPerformed(ActionEvent e){
 
-		//if startGame button is clicked
-		if(e.getSource() == startGame){
-			
-		}
-		
-		//Highscores?
-		else{
-			
-		}
-	}	
+	}
+
+
+    public void mousePressed(MouseEvent e) {
+       
+    }
+
+    public void mouseReleased(MouseEvent e) {
+       
+    }
+
+    public void mouseEntered(MouseEvent e) {
+    	setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+    }
+
+    public void mouseExited(MouseEvent e) {
+    	setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));  
+    }
+
+    public void mouseClicked(MouseEvent e) {
+       
+    }
 }
