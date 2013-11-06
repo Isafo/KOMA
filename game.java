@@ -12,11 +12,12 @@ import java.io.*;
 public class game extends JFrame implements ActionListener{
 	
 	// header Buttons and timer
-	public JLabel head, timeLeft, playerNameLabel, livesLabel;
+	public JLabel head, timeLeft, playerNameLabel, livesLabel, totalTimeLabel;
 	JPanel pnlColumn = new JPanel();
 	Timer timer;
 	private final int TIMECONSTANT = 5;
 	private int time = TIMECONSTANT; 
+	private int totalTime = 0;
 	
 	private Color backGround = new Color(245, 245, 245);
 	JPanel pnlGrid = new JPanel();
@@ -39,18 +40,25 @@ public class game extends JFrame implements ActionListener{
 
 		playerNameLabel = new JLabel();
 		livesLabel = new JLabel();
-
-		pnlHead.add(playerNameLabel);
-		pnlHead.add(livesLabel);
+		totalTimeLabel = new JLabel();
 
 		playerNameLabel.setText(menu.getPlayerName());
+		livesLabel.setText("Lives remaining: " + String.valueOf(lives));
+		totalTimeLabel.setText("Total time: " + String.valueOf(totalTime));
+
+		pnlHead.add(playerNameLabel);
 		
 		if(true) {
 			timer = new Timer(1000, new CountdownTimerListener());
 			timer.start();
-			timeLeft = new JLabel(String.valueOf(time));
+			timeLeft = new JLabel("Time: " + String.valueOf(time));
 			pnlHead.add(timeLeft);
 		}
+
+		
+		pnlHead.add(livesLabel);
+		pnlHead.add(totalTimeLabel);
+
 
 		//Container		
     	Container c = getContentPane();
@@ -78,14 +86,26 @@ public class game extends JFrame implements ActionListener{
 	public void runGame() {
 		selectRandomMiniGame();
 
+		switch(currentGame) {
+			case 0:
+				
+				break;
+			case 1:
+				break;
+		}
 	}
 	
 	public void timerOver() {
 		lives--;
+		livesLabel.setText("Lives remaining: " + String.valueOf(lives));
 		if(!dead()) {
 			time = TIMECONSTANT;
-			timeLeft.setText(String.valueOf(time));
+			timer.restart();
+			timeLeft.setText("Time: " + String.valueOf(time));
 			runGame();
+		}
+		else {
+			//score visas, avslutas
 		}
 	}
 
@@ -98,10 +118,15 @@ public class game extends JFrame implements ActionListener{
 	
    class CountdownTimerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-			if (--time > 0) {
-                timeLeft.setText(String.valueOf(time));
-            } else {
+			if (--time > -1) {
+				totalTime++;
+                timeLeft.setText("Time: " + String.valueOf(time));
+                totalTimeLabel.setText("Total time: " + String.valueOf(totalTime));
+            } 
+            else {
+            	totalTime++;
                 timeLeft.setText("Time's up, bitch!");
+                totalTimeLabel.setText("Total time: " + String.valueOf(totalTime));
                 timer.stop();
                 timerOver();
             }
