@@ -18,13 +18,22 @@ public class game extends JFrame implements ActionListener{
 	private final int TIMECONSTANT = 5;
 	private int time = TIMECONSTANT; 
 	private int totalTime = 0;
+
+	private int rows = 1;
+	private int columns = 10;
+	private int[][] theGrid = new int[rows][columns];
+	private JLabel[][] slots = new JLabel[rows][columns];
+	private final int pieceSize = 70;
+	private Color scorelines = new Color(50, 50, 50);
+	private final int GridW = rows * pieceSize;
+	private final int GridH = columns * pieceSize;
 	
 	private Color backGround = new Color(245, 245, 245);
 	JPanel pnlGrid = new JPanel();
 	JPanel pnlHead = new JPanel();
 	
 	//player
-	String name = "thiswillbereplaced";
+	String name = "slots slots slots slots slots slots ERRBODY SLOTS SLOTS SLOTS SLOTS";
 	private int lives = 5;
 
 	//Mini games
@@ -88,7 +97,9 @@ public class game extends JFrame implements ActionListener{
 
 		switch(currentGame) {
 			case 0:
-				
+				//gör ett rutsystem där bakgrunden ändras från grön till grått när den blivit klickad
+				//neutral färg när den inte är nästa som ska klickas
+
 				break;
 			case 1:
 				break;

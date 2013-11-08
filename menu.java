@@ -14,7 +14,7 @@ public class menu extends JFrame implements ActionListener{
 	JButton startGame, setPlayerName;
 	JTextField playerNameField;
 
-	static String p = "Player"; //standard player1 name
+	static String p = "Player"; 
 
 	public menu() throws IOException {
 		
