@@ -13,7 +13,7 @@ public class menu extends JFrame implements MouseListener{
 	JPanel head = new JPanel();
 	JPanel eastMenu = new JPanel();
 	JPanel playerNames = new JPanel();
-	JLabel startGame, highscore, quit;
+	JLabel startGame, highscoreMenu, quit;
 
 	public menu() throws IOException {
 		
@@ -26,9 +26,9 @@ public class menu extends JFrame implements MouseListener{
 		startGame.setFont(new Font("SanSerif", Font.PLAIN, 30));
 		startGame.addMouseListener(this);
 
-		highscore = new JLabel("Highscore");
-		highscore.setFont(new Font("SanSerif", Font.PLAIN, 30));
-		highscore.addMouseListener(this);
+		highscoreMenu = new JLabel("Highscore");
+		highscoreMenu.setFont(new Font("SanSerif", Font.PLAIN, 30));
+		highscoreMenu.addMouseListener(this);
 
 		quit = new JLabel("Quit game");
 		quit.setFont(new Font("SanSerif", Font.PLAIN, 30));
@@ -36,7 +36,7 @@ public class menu extends JFrame implements MouseListener{
 
 		head.add(header);
 		menu.add(startGame);
-		menu.add(highscore);
+		menu.add(highscoreMenu);
 		menu.add(quit);
 		menu.setLayout(gridMenu);
 
@@ -63,7 +63,18 @@ public class menu extends JFrame implements MouseListener{
 
 
     public void mousePressed(MouseEvent e) {
-    	
+    			if(e.getSource() == startGame){
+		//	game theGame = new game();
+			JOptionPane.showMessageDialog(null, "start game!");
+		}
+
+		//else if(e.getSource() == highscoreMenu){
+		//	highscore showHighscore == new highscore();
+		//}
+
+		else{
+			System.exit(0);
+		}
     }
 
     public void mouseReleased(MouseEvent e) {
