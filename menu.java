@@ -47,6 +47,8 @@ public class menu extends JFrame implements MouseListener{
  		for(int i = 0;  i < 5; i++){
  			txtHighscore.append(i+1 + ". " + high.getNames(i) + " " + high.getScores(i) + "s\n");
  		}
+ 		//Highscore not editable
+ 		txtHighscore.setEditable(false);
 
 
 
