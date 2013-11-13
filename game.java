@@ -15,14 +15,13 @@ public class game extends JFrame
 	
 	//timer
 	Timer timer;
-	private final double TIMECONSTANT = 6.0, TIMECONSTANTFIRST = TIMECONSTANT*2; //now doubles ---
+	private final double TIMECONSTANT = 5.0, TIMECONSTANTFIRST = TIMECONSTANT*2; //now doubles ---
 	private double time = TIMECONSTANTFIRST; 
 	private double totalTime = 0, totalExtraTime = 0;
-	//private boolean firstTime = true;
 
 	//grid
-	public int rows = 5;
-	public int columns = 5;
+	public int rows = 12;
+	public int columns = 12;
 	private String[][] theGrid = new String[rows][columns];
 	private JLabel[][] slots = new JLabel[rows][columns];
 	private final int pieceSize = 50;
@@ -33,22 +32,27 @@ public class game extends JFrame
 	private Color backGround = new Color(245, 245, 245);
 	private final Color GREEN = new Color(0, 245, 0);
 	private final Color YELLOW = new Color(245, 245, 0);
+	private final Color RED = new Color(245, 0, 0);
 	JPanel pnlGrid = new JPanel();
 	JPanel pnlHead = new JPanel();
 	
 	//player
 	String name = "slots slots slots slots slots slots ERRBODY SLOTS SLOTS SLOTS SLOTS";
-	private int lives = 5;
+	private int lives = 4;
 
 	//Mini games
-	private static int NUMBEROFGAMES = 1;
+	private static int NUMBEROFGAMES = 2;
 	private int miniGames[] = new int[NUMBEROFGAMES];
 	private double currentGame = 0;
 
 	//mini game - 0
 	private final String ALPHABET = "ABCDEFGHIJKLMNPQRSTUVWXYZ123456789"; //no O or 0
 	private final int ALPHABETLENGTH = ALPHABET.length();
-	private int count1 = 0, count2 = 0;
+	private int countRows = 0, countColumns = 0;
+
+	//mini game - 1
+	private final String ALPHABETQWOP = "WOP"; //no O or 0
+	private final int ALPHABETQWOPLENGTH = ALPHABETQWOP.length();
 	
 	public game() throws IOException {
 		//header
@@ -118,12 +122,24 @@ public class game extends JFrame
 		runGame();	
 	}
 
-	private void fillGrid(){
-		for(int i = 0; i < rows; i++) {
-			for(int j = 0; j < columns; j++) {
-				char letter = ALPHABET.charAt((int) Math.round(Math.random()*(ALPHABETLENGTH-1)));
-				theGrid[i][j] = String.valueOf(letter);
-			}
+	private void fillGrid() {
+		switch((int) currentGame) {
+			case 0:
+				for(int i = 0; i < rows; i++) {
+					for(int j = 0; j < columns; j++) {
+						char letter = ALPHABET.charAt((int) Math.round(Math.random()*(ALPHABETLENGTH-1)));
+						theGrid[i][j] = String.valueOf(letter);
+					}
+				}
+				break;
+			case 1:
+				for(int i = 0; i < rows; i++) {
+					for(int j = 0; j < columns; j++) {
+						char letter = ALPHABETQWOP.charAt((int) Math.round(Math.random()*(ALPHABETQWOPLENGTH-1)));
+						theGrid[i][j] = String.valueOf(letter);
+					}
+				}
+				break;
 		}
 	}
 
@@ -142,12 +158,10 @@ public class game extends JFrame
 		}
 	}
 
-	private JPanel CreateGrid() {
+	private JPanel createGrid() {
 		pnlGrid.setLayout(new GridLayout(1, 1));
 		pnlGrid.setPreferredSize(new Dimension(GridW, GridH));
 		pnlGrid.setLayout(new GridLayout(rows, columns));
-		
-		//pnlGrid.setBackground(p1c);
 		
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < columns; j++) {
@@ -157,7 +171,7 @@ public class game extends JFrame
 		return pnlGrid;
 	}
 
-	public void clear(){
+	public void clear() {
 		switch((int) currentGame) {
 			case 0:
 				for(int j = 0; j < columns; j++){		
@@ -166,10 +180,18 @@ public class game extends JFrame
 						pnlGrid.remove(slots[i][j]);
 					}
 				}
-				count1 = 0;
-				count2 = 0;
+				countRows = 0;
+				countColumns = 0;
 				break;
 			case 1:
+				for(int j = 0; j < columns; j++){		
+					for(int i = 0; i < rows; i++){
+						slots [i] [j].setBackground(backGround);
+						pnlGrid.remove(slots[i][j]);
+					}
+				}
+				countRows = 0;
+				countColumns = 0;
 				break;
 		}
 	}
@@ -195,6 +217,8 @@ public class game extends JFrame
 				columns = (int) Math.round(Math.random() * 2 + 2);
 				break;
 			case 1:
+				rows = 4;
+				columns = 4;
 				break;
 		}
 	}
@@ -204,15 +228,16 @@ public class game extends JFrame
 
 		switch((int) currentGame) {
 			case 0:
-				//gör ett rutsystem där bakgrunden ändras från grön till grått när den blivit klickad
-				//neutral färg när den inte är nästa som ska klickas
-				//Grid
 				fillGrid();
 				initSlots();
-				CreateGrid();
-				slots[count1][count2].setBackground(YELLOW);
+				createGrid();
+				slots[countRows][countColumns].setBackground(YELLOW);
 				break;
 			case 1:
+				fillGrid();
+				initSlots();
+				createGrid();
+				slots[countRows][countColumns].setBackground(YELLOW);
 				break;
 		}
 	}
@@ -223,28 +248,53 @@ public class game extends JFrame
 	            char c = e.getKeyChar();
 	            String keyString = String.valueOf(c).toUpperCase();
 	            //System.out.println("KEY PRESSED char: " + c);
-	            if(keyString.equals(theGrid[count1][count2])) {
-	            	slots[count1][count2].setBackground(GREEN);
-	            	if(count2 < columns-1)
-	            		slots[count1][count2+1].setBackground(YELLOW);
-	            	count2++;
-	            	if(count2 >= columns && count1 < rows-1) {
-	            		count2 = 0;
-	            		count1++;
-	            		slots[count1][count2].setBackground(YELLOW);
+	            if(keyString.equals(theGrid[countRows][countColumns])) {
+	            	slots[countRows][countColumns].setBackground(GREEN);
+	            	if(countColumns < columns-1)
+	            		slots[countRows][countColumns+1].setBackground(YELLOW);
+	            	countColumns++;
+	            	if(countColumns >= columns && countRows < rows-1) {
+	            		countColumns = 0;
+	            		countRows++;
+	            		slots[countRows][countColumns].setBackground(YELLOW);
 	            	}
-	            	if(count2 >= columns) {//fix for not out of bounds on last row
-		            	count2 = 0;
+	            	if(countColumns >= columns) {//fix for not out of bounds on last row
+		            	countColumns = 0;
 		            	nextGame();
 	            	}
 	            }
 	            else {
-	            	time -= 0.4;
+	            	time -= 0.2;
+	            	slots[countRows][countColumns].setBackground(RED);
 	            }
-	            System.out.println("COUNT1, 2: " + count1 + ", " + count2);
-	            //System.out.println("keyString: " + keyString + ", theGrid[][]: " + theGrid[count1][count2-1]);
+	            //System.out.println("countRows, 2: " + countRows + ", " + countColumns);
+	            //System.out.println("keyString: " + keyString + ", theGrid[][]: " + theGrid[countRows][countColumns-1]);
 				break;
 			case 1:
+				c = e.getKeyChar();
+	            keyString = String.valueOf(c).toUpperCase();
+	            //System.out.println("KEY PRESSED char: " + c);
+	            if(keyString.equals(theGrid[countRows][countColumns])) {
+	            	slots[countRows][countColumns].setBackground(GREEN);
+	            	if(countColumns < columns-1)
+	            		slots[countRows][countColumns+1].setBackground(YELLOW);
+	            	countColumns++;
+	            	if(countColumns >= columns && countRows < rows-1) {
+	            		countColumns = 0;
+	            		countRows++;
+	            		slots[countRows][countColumns].setBackground(YELLOW);
+	            	}
+	            	if(countColumns >= columns) {//fix for not out of bounds on last row
+		            	countColumns = 0;
+		            	nextGame();
+	            	}
+	            }
+	            else {
+	            	time -= 0.2;
+	            	slots[countRows][countColumns].setBackground(RED);
+	            }
+	            //System.out.println("countRows, 2: " + countRows + ", " + countColumns);
+	            //System.out.println("keyString: " + keyString + ", theGrid[][]: " + theGrid[countRows][countColumns-1]);
 				break;
 		}
     }
