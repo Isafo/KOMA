@@ -75,8 +75,12 @@ public class menu extends JFrame implements MouseListener{
     		else
     			p = "player";
 
-			game theGame = new game();
-			JOptionPane.showMessageDialog(null, "start game!");
+    		try {
+                game theGame = new game();
+            } catch (IOException e1) {
+            	// TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
 		}
 
 		else if(e.getSource() == highscoreMenu){
