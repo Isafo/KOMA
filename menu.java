@@ -11,14 +11,14 @@ public class menu extends JFrame implements MouseListener{
 	Container c = getContentPane();	
 	JPanel menu = new JPanel();
 	JPanel head = new JPanel();
+	JPanel eastMenu = new JPanel();
 	JPanel playerNames = new JPanel();
-	JLabel startGame;
+	JLabel startGame, highscore, quit;
 
 	public menu() throws IOException {
 		
-		FlowLayout flow = new FlowLayout();
+		GridLayout gridMenu = new GridLayout(3, 0);
 		
-		JLabel start = new JLabel("Epic game!", JLabel.RIGHT);
 		JLabel header = new JLabel("KOMA", JLabel.CENTER);
 		header.setFont(new Font("SanSerif", Font.PLAIN, 99));
 		
@@ -26,17 +26,25 @@ public class menu extends JFrame implements MouseListener{
 		startGame.setFont(new Font("SanSerif", Font.PLAIN, 30));
 		startGame.addMouseListener(this);
 
+		highscore = new JLabel("Highscore");
+		highscore.setFont(new Font("SanSerif", Font.PLAIN, 30));
+		highscore.addMouseListener(this);
+
+		quit = new JLabel("Quit game");
+		quit.setFont(new Font("SanSerif", Font.PLAIN, 30));
+		quit.addMouseListener(this);
+
 		head.add(header);
-		menu.add(start);
 		menu.add(startGame);
-		menu.setLayout(flow);
-		menu.setPreferredSize(new Dimension(150, 150));
-		
+		menu.add(highscore);
+		menu.add(quit);
+		menu.setLayout(gridMenu);
+
+		//container displaying centerpositioned items
 		Container c = getContentPane();
 	    c.setLayout(new BorderLayout());
 	    c.add(head, BorderLayout.NORTH);
-	    c.add(menu, BorderLayout.CENTER);
-	    c.add(playerNames, BorderLayout.SOUTH);
+	    c.add(menu, BorderLayout.EAST);
 	    
 	    setSize(600,600);
 	    setLocationRelativeTo(null); //makes the window will open in center of screen
@@ -55,22 +63,24 @@ public class menu extends JFrame implements MouseListener{
 
 
     public void mousePressed(MouseEvent e) {
-       
+    	
     }
 
     public void mouseReleased(MouseEvent e) {
-       
+    	
     }
 
     public void mouseEntered(MouseEvent e) {
+    	//sets cursor to hand cursor if hovering over a menu item
     	setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
     }
 
     public void mouseExited(MouseEvent e) {
+    	//sets cursor to default cursor if exiting a menu item
     	setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));  
     }
 
     public void mouseClicked(MouseEvent e) {
-       
+    	
     }
 }
