@@ -13,11 +13,15 @@ public class menu extends JFrame implements MouseListener{
 	JPanel head = new JPanel();
 	JLabel startGame, highscoreMenu, quit;
 	JTextField playerName;
-	static String p = "Player"; 
+	static String p = "Player";
+
+	JTextArea txtHighscore;
+	highscore high;
 
 	public menu() throws IOException {
 		
 		GridLayout gridMenu = new GridLayout(4, 0);
+		high = new highscore();
 		
 		JLabel header = new JLabel("KOMA", JLabel.CENTER);
 		header.setFont(new Font("SanSerif", Font.PLAIN, 99));
@@ -36,7 +40,18 @@ public class menu extends JFrame implements MouseListener{
 
 		playerName = new JTextField("Player name", 15);
 
+		//add highscores
+		txtHighscore = new JTextArea();
+ 		openFile();
+ 		for(int i = 0;  i < 5; i++){
+ 			txtHighscore.append(i+1 + ". " + high.getNames(i) + " " + high.getScores(i) + "s\n");
+ 		}
+
+
+
+
 		head.add(header);
+		head.add(txtHighscore);
 		menu.add(startGame);
 		menu.add(highscoreMenu);
 		menu.add(quit);
@@ -57,6 +72,13 @@ public class menu extends JFrame implements MouseListener{
 	    setDefaultCloseOperation(EXIT_ON_CLOSE);	
 	}
 	
+	public void openFile(){  
+ 		try{
+ 			high.load();
+ 		}
+ 		catch(IOException e){}  
+ 	}
+
 	/*
 	**ActionListener
 	*/
