@@ -1,19 +1,16 @@
+
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
 
-public class menu extends JFrame implements ActionListener{
+public class menu extends JFrame implements MouseListener{
+	
 	
 	Container c = getContentPane();	
 	JPanel menu = new JPanel();
 	JPanel head = new JPanel();
-	JPanel playerName = new JPanel();
-	JButton startGame, setPlayerName;
-	JTextField playerNameField;
-
-	static String p = "Player"; //standard player1 name
-
 	JPanel highscorePanel = new JPanel();
 	JLabel startGame, highscoreMenu, quit;
 	JTextField playerName;
@@ -29,17 +26,7 @@ public class menu extends JFrame implements ActionListener{
 		
 		JLabel header = new JLabel("KOMA", JLabel.CENTER);
 		header.setFont(new Font("SanSerif", Font.PLAIN, 99));
-		startGame = new JButton("Play game");
-		setPlayerName = new JButton("Set player name");
-
-		playerNameField = new JTextField("Player name", 15);
-
-		startGame.addActionListener(this);
-		setPlayerName.addActionListener(this);
-
-		playerName.add(playerNameField);
-		playerName.add(setPlayerName);
-
+		
 		startGame = new JLabel("Play game");
 		startGame.setFont(new Font("SanSerif", Font.PLAIN, 30));
 		startGame.addMouseListener(this);
@@ -63,6 +50,9 @@ public class menu extends JFrame implements ActionListener{
  		//Highscore not editable
  		txtHighscore.setEditable(false);
 
+
+
+
 		head.add(header);
 		menu.add(startGame);
 		menu.add(highscoreMenu);
@@ -75,15 +65,12 @@ public class menu extends JFrame implements ActionListener{
 		Container c = getContentPane();
 	    c.setLayout(new BorderLayout());
 	    c.add(head, BorderLayout.NORTH);
-	    c.add(menu, BorderLayout.CENTER);
-	    c.add(playerName, BorderLayout.SOUTH);
 	    c.add(menu, BorderLayout.EAST);
 	    c.add(highscorePanel, BorderLayout.WEST);
 	    
 	    setSize(600,600);
 	    setLocationRelativeTo(null); //makes the window will open in center of screen
 	    setResizable(false);
-	    setTitle("OKLART");
 	    setTitle("Random");
 	    setVisible(true);
 	    setDefaultCloseOperation(EXIT_ON_CLOSE);	
@@ -130,11 +117,7 @@ public class menu extends JFrame implements ActionListener{
 		else{
 			System.exit(0);
 		}
-	}	
-
-	public static String getPlayerName(){
-		return p;
-	}
+    }
 
     public void mouseReleased(MouseEvent e) {
     	
@@ -161,4 +144,5 @@ public class menu extends JFrame implements ActionListener{
         
         return p;
     }
+
 }

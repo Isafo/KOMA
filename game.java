@@ -13,14 +13,6 @@ public class game extends JFrame
 	public JLabel head, timeLeft, playerNameLabel, livesLabel, totalTimeLabel, totalExtraTimeLabel;
 	private final int FONTSIZE = 15;
 	
-	// header Buttons and timer
-	public JLabel head, timeLeft, playerNameLabel, livesLabel, totalTimeLabel;
-	JPanel pnlColumn = new JPanel();
-	Timer timer;
-	private final int TIMECONSTANT = 5;
-	private int time = TIMECONSTANT; 
-	private int totalTime = 0;
-
 	//timer
 	Timer timer;
 	private final double TIMECONSTANT = 6.0, TIMECONSTANTFIRST = TIMECONSTANT*2; //now doubles ---
@@ -45,7 +37,6 @@ public class game extends JFrame
 	JPanel pnlHead = new JPanel();
 	
 	//player
-	String name = "thiswillbereplaced";
 	String name = "slots slots slots slots slots slots ERRBODY SLOTS SLOTS SLOTS SLOTS";
 	private int lives = 5;
 
@@ -67,11 +58,6 @@ public class game extends JFrame
 
 		playerNameLabel = new JLabel();
 		livesLabel = new JLabel();
-		totalTimeLabel = new JLabel();
-
-		playerNameLabel.setText(menu.getPlayerName());
-		livesLabel.setText("Lives remaining: " + String.valueOf(lives));
-		totalTimeLabel.setText("Total time: " + String.valueOf(totalTime));
 		timeLeft = new JLabel();
 		totalTimeLabel = new JLabel();
 		totalExtraTimeLabel = new JLabel();
@@ -91,7 +77,6 @@ public class game extends JFrame
 		if(true) {
 			timer = new Timer(100, new CountdownTimerListener());
 			timer.start();
-			timeLeft = new JLabel("Time: " + String.valueOf(time));
 			timeLeft.setText("Time: " + new DecimalFormat("##.##").format(time));
 			timeLeft.setFont(new Font("SanSerif", Font.PLAIN, FONTSIZE));
 			pnlHead.add(timeLeft);
@@ -100,8 +85,7 @@ public class game extends JFrame
 		pnlHead.add(livesLabel);
 		pnlHead.add(totalTimeLabel);
 		pnlHead.add(totalExtraTimeLabel);
-		pnlHead.add(livesLabel);
-		pnlHead.add(totalTimeLabel);
+
 		addKeyListener(this);
 		pnlHead.addKeyListener(this);
 		pnlGrid.addKeyListener(this);
@@ -129,9 +113,6 @@ public class game extends JFrame
         setTitle("Projekt oklart");
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-
-        selectRandomMiniGame();
-		runGame();	
 
         //pnlHead.requestFocusInWindow();
 		runGame();	
@@ -208,7 +189,6 @@ public class game extends JFrame
 
 	public void selectRandomMiniGame() {
 		currentGame = Math.round(Math.random() * (miniGames.length - 1));
-
 		switch((int) currentGame) {
 			case 0:
 				rows = (int) Math.round(Math.random() * 2 + 2);
@@ -217,15 +197,11 @@ public class game extends JFrame
 			case 1:
 				break;
 		}
-
 	}
 
 	public void runGame() {
 		selectRandomMiniGame();
 
-		switch(currentGame) {
-			case 0:
-				
 		switch((int) currentGame) {
 			case 0:
 				//gör ett rutsystem där bakgrunden ändras från grön till grått när den blivit klickad
@@ -235,7 +211,6 @@ public class game extends JFrame
 				initSlots();
 				CreateGrid();
 				slots[count1][count2].setBackground(YELLOW);
-
 				break;
 			case 1:
 				break;
@@ -288,10 +263,8 @@ public class game extends JFrame
 		if(!dead()) {
 			time = TIMECONSTANT;
 			timer.restart();
-			timeLeft.setText("Time: " + String.valueOf(time));
 			timeLeft.setText("Time: " + new DecimalFormat("##.##").format(time));
 			clear();
-
 			runGame();
 		}
 		else {
@@ -304,27 +277,6 @@ public class game extends JFrame
 			return true;
 		else
 			return false;
-	}
-	
-   class CountdownTimerListener implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
-			if (--time > -1) {
-				totalTime++;
-                timeLeft.setText("Time: " + String.valueOf(time));
-                totalTimeLabel.setText("Total time: " + String.valueOf(totalTime));
-            } 
-            else {
-            	totalTime++;
-                timeLeft.setText("Time's up, bitch!");
-                totalTimeLabel.setText("Total time: " + String.valueOf(totalTime));
-                timer.stop();
-                timerOver();
-            }
-        }
-    }
-
-	public void actionPerformed(ActionEvent e) {
-		
 	}
 	
    class CountdownTimerListener implements ActionListener {
