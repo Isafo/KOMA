@@ -2,23 +2,27 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.border.LineBorder;
+import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.io.*;
 
 public class game extends JFrame 
 	implements ActionListener, KeyListener{
 	
-	// header Buttons and timer
+	// header & labels
 	public JLabel head, timeLeft, playerNameLabel, livesLabel, totalTimeLabel, totalExtraTimeLabel;
+	private final int FONTSIZE = 15;
 	
+	//timer
 	Timer timer;
-	private final int TIMECONSTANT = 6;
-	private int time = TIMECONSTANT; 
-	private int totalTime = 0, totalExtraTime = 0;
+	private final double TIMECONSTANT = 6.0, TIMECONSTANTFIRST = TIMECONSTANT*2; //now doubles ---
+	private double time = TIMECONSTANTFIRST; 
+	private double totalTime = 0, totalExtraTime = 0;
+	//private boolean firstTime = true;
 
 	//grid
-	private int rows = 2;
-	private int columns = 6;
+	public int rows = 5;
+	public int columns = 5;
 	private String[][] theGrid = new String[rows][columns];
 	private JLabel[][] slots = new JLabel[rows][columns];
 	private final int pieceSize = 50;
@@ -30,7 +34,6 @@ public class game extends JFrame
 	private final Color GREEN = new Color(0, 245, 0);
 	private final Color YELLOW = new Color(245, 245, 0);
 	JPanel pnlGrid = new JPanel();
-	JPanel pnlColumn = new JPanel();
 	JPanel pnlHead = new JPanel();
 	
 	//player
@@ -42,8 +45,8 @@ public class game extends JFrame
 	private int miniGames[] = new int[NUMBEROFGAMES];
 	private double currentGame = 0;
 
-	//0
-	private final String ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+	//mini game - 0
+	private final String ALPHABET = "ABCDEFGHIJKLMNPQRSTUVWXYZ123456789"; //no O or 0
 	private final int ALPHABETLENGTH = ALPHABET.length();
 	private int count1 = 0, count2 = 0;
 	
@@ -55,20 +58,27 @@ public class game extends JFrame
 
 		playerNameLabel = new JLabel();
 		livesLabel = new JLabel();
+		timeLeft = new JLabel();
 		totalTimeLabel = new JLabel();
 		totalExtraTimeLabel = new JLabel();
 
 		playerNameLabel.setText(menu.getPlayerName());
-		livesLabel.setText("Lives remaining: " + String.valueOf(lives));
-		totalTimeLabel.setText("Total time: " + String.valueOf(totalTime));
-		totalExtraTimeLabel.setText("Extra time: " + String.valueOf(totalExtraTime));
+		playerNameLabel.setFont(new Font("SanSerif", Font.PLAIN, FONTSIZE));
+		livesLabel.setFont(new Font("SanSerif", Font.PLAIN, FONTSIZE));
+		totalTimeLabel.setFont(new Font("SanSerif", Font.PLAIN, FONTSIZE));
+		totalExtraTimeLabel.setFont(new Font("SanSerif", Font.PLAIN, FONTSIZE));
+
+		timeLeft.setText("Time: " + new DecimalFormat("##.##").format(time));
+		totalTimeLabel.setText("Total time: " + new DecimalFormat("##.##").format(totalTime));
+		totalExtraTimeLabel.setText("Extra time: " + new DecimalFormat("##.##").format(totalExtraTime));
 
 		pnlHead.add(playerNameLabel);
 		
 		if(true) {
-			timer = new Timer(1000, new CountdownTimerListener());
+			timer = new Timer(100, new CountdownTimerListener());
 			timer.start();
-			timeLeft = new JLabel("Time: " + String.valueOf(time));
+			timeLeft.setText("Time: " + new DecimalFormat("##.##").format(time));
+			timeLeft.setFont(new Font("SanSerif", Font.PLAIN, FONTSIZE));
 			pnlHead.add(timeLeft);
 		}
 		
@@ -78,14 +88,12 @@ public class game extends JFrame
 
 		addKeyListener(this);
 		pnlHead.addKeyListener(this);
-		pnlColumn.addKeyListener(this);
 		pnlGrid.addKeyListener(this);
 		playerNameLabel.addKeyListener(this);
 		livesLabel.addKeyListener(this);
 		totalTimeLabel.addKeyListener(this);
 		totalExtraTimeLabel.addKeyListener(this);
 		pnlHead.setFocusable(true);
-		pnlColumn.setFocusable(true);
 		pnlGrid.setFocusable(true);
 		playerNameLabel.setFocusable(true);
 		livesLabel.setFocusable(true);
@@ -96,8 +104,7 @@ public class game extends JFrame
     	Container c = getContentPane();
         c.setLayout(new BorderLayout());
         c.add(pnlHead, BorderLayout.NORTH);
-        c.add(pnlColumn, BorderLayout.CENTER);
-        c.add(pnlGrid, BorderLayout.SOUTH); 
+        c.add(pnlGrid, BorderLayout.CENTER); 
 
         pack();
         setLocationRelativeTo(null);
@@ -107,7 +114,6 @@ public class game extends JFrame
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        selectRandomMiniGame();
         //pnlHead.requestFocusInWindow();
 		runGame();	
 	}
@@ -131,6 +137,7 @@ public class game extends JFrame
 				slots [i] [j].setOpaque(true);
 				slots [i] [j].setBackground(backGround);
 				slots [i] [j].setText(theGrid[i][j]);
+				slots [i] [j].setFont(new Font("SanSerif", Font.PLAIN, 65));
 			}
 		}
 	}
@@ -172,9 +179,9 @@ public class game extends JFrame
 		totalExtraTime += time*2;
 		time = TIMECONSTANT;
 		timer.restart();
-		timeLeft.setText("Time: " + String.valueOf(time));
-		totalTimeLabel.setText("Total time: " + String.valueOf(totalTime));
-		totalExtraTimeLabel.setText("Extra time: " + String.valueOf(totalExtraTime));
+		timeLeft.setText("Time: " + new DecimalFormat("##.##").format(time));
+		totalTimeLabel.setText("Total time: " + new DecimalFormat("##.##").format(totalTime));
+		totalExtraTimeLabel.setText("Extra time: " + new DecimalFormat("##.##").format(totalExtraTime));
 
 		clear();
 		runGame();
@@ -182,6 +189,14 @@ public class game extends JFrame
 
 	public void selectRandomMiniGame() {
 		currentGame = Math.round(Math.random() * (miniGames.length - 1));
+		switch((int) currentGame) {
+			case 0:
+				rows = (int) Math.round(Math.random() * 2 + 2);
+				columns = (int) Math.round(Math.random() * 2 + 2);
+				break;
+			case 1:
+				break;
+		}
 	}
 
 	public void runGame() {
@@ -216,11 +231,15 @@ public class game extends JFrame
 	            	if(count2 >= columns && count1 < rows-1) {
 	            		count2 = 0;
 	            		count1++;
+	            		slots[count1][count2].setBackground(YELLOW);
 	            	}
 	            	if(count2 >= columns) {//fix for not out of bounds on last row
 		            	count2 = 0;
 		            	nextGame();
 	            	}
+	            }
+	            else {
+	            	time -= 0.4;
 	            }
 	            System.out.println("COUNT1, 2: " + count1 + ", " + count2);
 	            //System.out.println("keyString: " + keyString + ", theGrid[][]: " + theGrid[count1][count2-1]);
@@ -244,7 +263,7 @@ public class game extends JFrame
 		if(!dead()) {
 			time = TIMECONSTANT;
 			timer.restart();
-			timeLeft.setText("Time: " + String.valueOf(time));
+			timeLeft.setText("Time: " + new DecimalFormat("##.##").format(time));
 			clear();
 			runGame();
 		}
@@ -262,15 +281,15 @@ public class game extends JFrame
 	
    class CountdownTimerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-			if (--time > -1) {
-				totalTime++;
-                timeLeft.setText("Time: " + String.valueOf(time));
-                totalTimeLabel.setText("Total time: " + String.valueOf(totalTime));
+			if ((time -= 0.1) > 0) {
+				totalTime += 0.1;
+                timeLeft.setText("Time: " + new DecimalFormat("##.##").format(time));
+				totalTimeLabel.setText("Total time: " + new DecimalFormat("##.##").format(totalTime));
             } 
             else {
-            	totalTime++;
-                timeLeft.setText("Time's up, bitch!");
-                totalTimeLabel.setText("Total time: " + String.valueOf(totalTime));
+            	totalTime += 0.1;
+                timeLeft.setText("Time's up!");
+                totalTimeLabel.setText("Total time: " + new DecimalFormat("##.##").format(totalTime));
                 timer.stop();
                 timerOver();
             }
