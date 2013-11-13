@@ -49,7 +49,7 @@ public class menu extends JFrame implements MouseListener{
 	    setSize(600,600);
 	    setLocationRelativeTo(null); //makes the window will open in center of screen
 	    setResizable(false);
-	    setTitle("Awesome game!");
+	    setTitle("Random");
 	    setVisible(true);
 	    setDefaultCloseOperation(EXIT_ON_CLOSE);	
 	}
@@ -63,14 +63,15 @@ public class menu extends JFrame implements MouseListener{
 
 
     public void mousePressed(MouseEvent e) {
-    			if(e.getSource() == startGame){
-		//	game theGame = new game();
+    	if(e.getSource() == startGame){
+			game theGame = new game();
 			JOptionPane.showMessageDialog(null, "start game!");
 		}
 
-		//else if(e.getSource() == highscoreMenu){
+		else if(e.getSource() == highscoreMenu){
 		//	highscore showHighscore == new highscore();
-		//}
+			JOptionPane.showMessageDialog(null, "highscore clicked");	
+		}
 
 		else{
 			System.exit(0);
