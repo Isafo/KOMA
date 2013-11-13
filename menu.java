@@ -11,13 +11,13 @@ public class menu extends JFrame implements MouseListener{
 	Container c = getContentPane();	
 	JPanel menu = new JPanel();
 	JPanel head = new JPanel();
-	JPanel eastMenu = new JPanel();
-	JPanel playerNames = new JPanel();
 	JLabel startGame, highscoreMenu, quit;
+	JTextField playerName;
+	static String p = "Player"; 
 
 	public menu() throws IOException {
 		
-		GridLayout gridMenu = new GridLayout(3, 0);
+		GridLayout gridMenu = new GridLayout(4, 0);
 		
 		JLabel header = new JLabel("KOMA", JLabel.CENTER);
 		header.setFont(new Font("SanSerif", Font.PLAIN, 99));
@@ -34,11 +34,14 @@ public class menu extends JFrame implements MouseListener{
 		quit.setFont(new Font("SanSerif", Font.PLAIN, 30));
 		quit.addMouseListener(this);
 
+		playerName = new JTextField("Player name", 15);
+
 		head.add(header);
 		menu.add(startGame);
 		menu.add(highscoreMenu);
 		menu.add(quit);
 		menu.setLayout(gridMenu);
+		menu.add(playerName);
 
 		//container displaying centerpositioned items
 		Container c = getContentPane();
@@ -64,6 +67,14 @@ public class menu extends JFrame implements MouseListener{
 
     public void mousePressed(MouseEvent e) {
     	if(e.getSource() == startGame){
+    		//set player name
+
+    		if(!playerName.getText().equals(""))
+    			p = playerName.getText();
+    		
+    		else
+    			p = "player";
+
 			game theGame = new game();
 			JOptionPane.showMessageDialog(null, "start game!");
 		}
@@ -95,4 +106,13 @@ public class menu extends JFrame implements MouseListener{
     public void mouseClicked(MouseEvent e) {
     	
     }
+
+
+    //set player name
+
+    public static String getPlayerName(){
+        
+        return p;
+    }
+
 }
