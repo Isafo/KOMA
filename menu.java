@@ -11,6 +11,7 @@ public class menu extends JFrame implements MouseListener{
 	Container c = getContentPane();	
 	JPanel menu = new JPanel();
 	JPanel head = new JPanel();
+	JPanel highscorePanel = new JPanel();
 	JLabel startGame, highscoreMenu, quit;
 	JTextField playerName;
 	static String p = "Player";
@@ -51,18 +52,19 @@ public class menu extends JFrame implements MouseListener{
 
 
 		head.add(header);
-		head.add(txtHighscore);
 		menu.add(startGame);
 		menu.add(highscoreMenu);
 		menu.add(quit);
-		menu.setLayout(gridMenu);
 		menu.add(playerName);
+		menu.setLayout(gridMenu);
+		highscorePanel.add(txtHighscore);
 
 		//container displaying centerpositioned items
 		Container c = getContentPane();
 	    c.setLayout(new BorderLayout());
 	    c.add(head, BorderLayout.NORTH);
 	    c.add(menu, BorderLayout.EAST);
+	    c.add(highscorePanel, BorderLayout.WEST);
 	    
 	    setSize(600,600);
 	    setLocationRelativeTo(null); //makes the window will open in center of screen
