@@ -60,10 +60,10 @@ public class menu extends JFrame implements MouseListener{
 		menu.add(quit);
 		menu.add(playerName);
 		menu.setLayout(gridMenu);
-		menu.setBackground(Color.CYAN);
+		//menu.setBackground(Color.CYAN);
 		highscorePanel.add(txtHighscore);
 
- 		getContentPane().setBackground(Color.BLUE);
+ 		//getContentPane().setBackground(Color.BLUE);
 		//container displaying centerpositioned items
 		Container c = getContentPane();
 	    c.setLayout(new BorderLayout());
