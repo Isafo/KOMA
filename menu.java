@@ -47,10 +47,13 @@ public class menu extends JFrame implements MouseListener{
  		}
  		//Highscore not editable
  		txtHighscore.setEditable(false);
- 		txtHighscore.setOpaque(false);
+ 		
+ 		//SŠtter backgrunden i textarean
+		txtHighscore.setOpaque(false);
  		highscorePanel.setOpaque(false);
  		head.setOpaque(false);
 
+ 		
 		head.add(header);
 		menu.add(startGame);
 		menu.add(highscoreMenu);
