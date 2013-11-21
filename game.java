@@ -1,4 +1,8 @@
 import javax.swing.*;
+import javax.swing.text.DefaultStyledDocument;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.border.LineBorder;
@@ -15,14 +19,14 @@ public class game extends JFrame
 	
 	//timer
 	Timer timer;
-	private final double TIMECONSTANT = 6.0, TIMECONSTANTFIRST = TIMECONSTANT*2; //now doubles ---
+	private final double TIMECONSTANT = 6, TIMECONSTANTFIRST = TIMECONSTANT*2; //now doubles ---
 	private double time = TIMECONSTANTFIRST; 
 	private double totalTime = 0, totalExtraTime = 0;
-	//private boolean firstTime = true;
+	private DecimalFormat df = new DecimalFormat("##.##");
 
 	//grid
-	public int rows = 5;
-	public int columns = 5;
+	public int rows = 12;
+	public int columns = 12;
 	private String[][] theGrid = new String[rows][columns];
 	private JLabel[][] slots = new JLabel[rows][columns];
 	private final int pieceSize = 50;
@@ -33,28 +37,47 @@ public class game extends JFrame
 	private Color backGround = new Color(245, 245, 245);
 	private final Color GREEN = new Color(0, 245, 0);
 	private final Color YELLOW = new Color(245, 245, 0);
+	private final Color RED = new Color(245, 0, 0);
+	private final Color BLACK = new Color(0, 0, 0);
 	JPanel pnlGrid = new JPanel();
 	JPanel pnlHead = new JPanel();
 	
 	//player
 	String name = "slots slots slots slots slots slots ERRBODY SLOTS SLOTS SLOTS SLOTS";
-	private int lives = 5;
+	private int lives = 4;
+	private boolean started = false;
+	private boolean timerStarted = false;
 
 	//Mini games
-	private static int NUMBEROFGAMES = 1;
+	private static int NUMBEROFGAMES = 3;
 	private int miniGames[] = new int[NUMBEROFGAMES];
 	private double currentGame = 0;
 
 	//mini game - 0
 	private final String ALPHABET = "ABCDEFGHIJKLMNPQRSTUVWXYZ123456789"; //no O or 0
 	private final int ALPHABETLENGTH = ALPHABET.length();
-	private int count1 = 0, count2 = 0;
+	private int countRows = 0, countColumns = 0;
+
+	//mini game - 1
+	private final String ALPHABETQWOP = "WOOOP"; //no O or 0
+	private final int ALPHABETQWOPLENGTH = ALPHABETQWOP.length();
+
+	//mini game - 2
+	private final String texts[] = {"3.1415926535897932384", "This program is written in java", "this game is so user friendly"};
+	private final int TEXTSLENGTH = texts.length;
+	private int textChosen, countChar = 0;
+	private JLabel field;
+	private StyledDocument styleDoc = new DefaultStyledDocument();
+	private JTextPane textPane = new JTextPane(styleDoc);
+	private SimpleAttributeSet attributeSet = new SimpleAttributeSet();	
 	
 	public game() throws IOException {
 		//header
 		FlowLayout flow = new FlowLayout();
 		pnlHead.setLayout(flow);
 		pnlHead.setPreferredSize(new Dimension(40, 40));
+
+		System.out.println("TEXTSLENGTH: " + TEXTSLENGTH);
 
 		playerNameLabel = new JLabel();
 		livesLabel = new JLabel();
@@ -68,16 +91,16 @@ public class game extends JFrame
 		totalTimeLabel.setFont(new Font("SanSerif", Font.PLAIN, FONTSIZE));
 		totalExtraTimeLabel.setFont(new Font("SanSerif", Font.PLAIN, FONTSIZE));
 
-		timeLeft.setText("Time: " + new DecimalFormat("##.##").format(time));
-		totalTimeLabel.setText("Total time: " + new DecimalFormat("##.##").format(totalTime));
-		totalExtraTimeLabel.setText("Extra time: " + new DecimalFormat("##.##").format(totalExtraTime));
+		timeLeft.setText("Time: " + df.format(time));
+		totalTimeLabel.setText("Total time: " + df.format(totalTime));
+		totalExtraTimeLabel.setText("Extra time: " + df.format(totalExtraTime));
 
 		pnlHead.add(playerNameLabel);
 		
 		if(true) {
 			timer = new Timer(100, new CountdownTimerListener());
-			timer.start();
-			timeLeft.setText("Time: " + new DecimalFormat("##.##").format(time));
+			//timer.start();
+			timeLeft.setText("Time: " + df.format(time));
 			timeLeft.setFont(new Font("SanSerif", Font.PLAIN, FONTSIZE));
 			pnlHead.add(timeLeft);
 		}
@@ -114,64 +137,7 @@ public class game extends JFrame
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        //pnlHead.requestFocusInWindow();
 		runGame();	
-	}
-
-	private void fillGrid(){
-		for(int i = 0; i < rows; i++) {
-			for(int j = 0; j < columns; j++) {
-				char letter = ALPHABET.charAt((int) Math.round(Math.random()*(ALPHABETLENGTH-1)));
-				theGrid[i][j] = String.valueOf(letter);
-			}
-		}
-	}
-
-	private void initSlots() {
-		for (int i = 0; i < rows; i++) {
-			for (int j = 0; j < columns; j++) {
-				slots [i] [j] = new JLabel ();
-				slots [i] [j].setPreferredSize(new Dimension(pieceSize, pieceSize));
-				slots [i] [j].setHorizontalAlignment (SwingConstants.CENTER);
-				slots [i] [j].setBorder (new LineBorder (scorelines));
-				slots [i] [j].setOpaque(true);
-				slots [i] [j].setBackground(backGround);
-				slots [i] [j].setText(theGrid[i][j]);
-				slots [i] [j].setFont(new Font("SanSerif", Font.PLAIN, 65));
-			}
-		}
-	}
-
-	private JPanel CreateGrid() {
-		pnlGrid.setLayout(new GridLayout(1, 1));
-		pnlGrid.setPreferredSize(new Dimension(GridW, GridH));
-		pnlGrid.setLayout(new GridLayout(rows, columns));
-		
-		//pnlGrid.setBackground(p1c);
-		
-		for (int i = 0; i < rows; i++) {
-			for (int j = 0; j < columns; j++) {
-				pnlGrid.add(slots[i][j]);
-			}
-		}
-		return pnlGrid;
-	}
-
-	public void clear(){
-		switch((int) currentGame) {
-			case 0:
-				for(int j = 0; j < columns; j++){		
-					for(int i = 0; i < rows; i++){
-						slots [i] [j].setBackground(backGround);
-						pnlGrid.remove(slots[i][j]);
-					}
-				}
-				count1 = 0;
-				count2 = 0;
-				break;
-			case 1:
-				break;
-		}
 	}
 
 	public void nextGame() {
@@ -179,22 +145,31 @@ public class game extends JFrame
 		totalExtraTime += time*2;
 		time = TIMECONSTANT;
 		timer.restart();
-		timeLeft.setText("Time: " + new DecimalFormat("##.##").format(time));
-		totalTimeLabel.setText("Total time: " + new DecimalFormat("##.##").format(totalTime));
-		totalExtraTimeLabel.setText("Extra time: " + new DecimalFormat("##.##").format(totalExtraTime));
+		timeLeft.setText("Time: " + df.format(time));
+		totalTimeLabel.setText("Total time: " + df.format(totalTime));
+		totalExtraTimeLabel.setText("Extra time: " + df.format(totalExtraTime));
 
 		clear();
 		runGame();
 	}
 
 	public void selectRandomMiniGame() {
-		currentGame = Math.round(Math.random() * (miniGames.length - 1));
+		if(!started) {
+			currentGame = 2;
+			started = true;
+		}
+		else 
+			currentGame = Math.round(Math.random() * (miniGames.length - 1));
 		switch((int) currentGame) {
 			case 0:
 				rows = (int) Math.round(Math.random() * 2 + 2);
 				columns = (int) Math.round(Math.random() * 2 + 2);
 				break;
 			case 1:
+				rows = 3;
+				columns = 4;
+				break;
+			case 2:
 				break;
 		}
 	}
@@ -204,47 +179,111 @@ public class game extends JFrame
 
 		switch((int) currentGame) {
 			case 0:
-				//gör ett rutsystem där bakgrunden ändras från grön till grått när den blivit klickad
-				//neutral färg när den inte är nästa som ska klickas
-				//Grid
 				fillGrid();
 				initSlots();
-				CreateGrid();
-				slots[count1][count2].setBackground(YELLOW);
+				createGrid();
+				slots[countRows][countColumns].setBackground(YELLOW);
 				break;
 			case 1:
+				fillGrid();
+				initSlots();
+				createGrid();
+				slots[countRows][countColumns].setBackground(YELLOW);
+				break;
+			case 2:
+				createField();
+				break;
+		}
+	}
+
+	public void clear() {
+		switch((int) currentGame) {
+			case 0:
+				for(int j = 0; j < columns; j++){		
+					for(int i = 0; i < rows; i++){
+						slots [i] [j].setBackground(backGround);
+						pnlGrid.remove(slots[i][j]);
+						pnlGrid.removeAll();
+					}
+				}
+				countRows = 0;
+				countColumns = 0;
+				break;
+			case 1:
+				for(int j = 0; j < columns; j++){		
+					for(int i = 0; i < rows; i++){
+						slots [i] [j].setBackground(backGround);
+						pnlGrid.remove(slots[i][j]);
+						pnlGrid.removeAll();
+					}
+				}
+				countRows = 0;
+				countColumns = 0;
+				break;
+			case 2:
+				countChar = 0;
+				pnlGrid.remove(textPane);
+				pnlGrid.removeAll();
 				break;
 		}
 	}
 	
 	public void keyPressed(KeyEvent e) {
+		if(!timerStarted) {
+			timer.start();
+			timerStarted = true;
+		}
+		if(dead())
+			return;
+		
+		char c = e.getKeyChar();
+		String keyString;
         switch((int) currentGame) {
 			case 0:
-	            char c = e.getKeyChar();
-	            String keyString = String.valueOf(c).toUpperCase();
-	            //System.out.println("KEY PRESSED char: " + c);
-	            if(keyString.equals(theGrid[count1][count2])) {
-	            	slots[count1][count2].setBackground(GREEN);
-	            	if(count2 < columns-1)
-	            		slots[count1][count2+1].setBackground(YELLOW);
-	            	count2++;
-	            	if(count2 >= columns && count1 < rows-1) {
-	            		count2 = 0;
-	            		count1++;
-	            		slots[count1][count2].setBackground(YELLOW);
+			case 1:
+	            keyString = String.valueOf(c).toUpperCase();
+
+	            if(keyString.equals(theGrid[countRows][countColumns])) {
+	            	slots[countRows][countColumns].setBackground(GREEN);
+	            	if(countColumns < columns-1)
+	            		slots[countRows][countColumns+1].setBackground(YELLOW);
+	            	countColumns++;
+	            	if(countColumns >= columns && countRows < rows-1) {
+	            		countColumns = 0;
+	            		countRows++;
+	            		slots[countRows][countColumns].setBackground(YELLOW);
 	            	}
-	            	if(count2 >= columns) {//fix for not out of bounds on last row
-		            	count2 = 0;
+	            	if(countColumns >= columns) {//fix for not out of bounds on last row
+		            	countColumns = 0;
 		            	nextGame();
 	            	}
 	            }
 	            else {
-	            	time -= 0.4;
+	            	if(countRows + countColumns != 0)
+	            		time -= 0.2;
+            		slots[countRows][countColumns].setBackground(RED);
 	            }
-	            System.out.println("COUNT1, 2: " + count1 + ", " + count2);
-	            //System.out.println("keyString: " + keyString + ", theGrid[][]: " + theGrid[count1][count2-1]);
 				break;
-			case 1:
+			case 2:
+				if(c == texts[textChosen].charAt(countChar)) {
+					StyleConstants.setForeground(attributeSet, GREEN);
+					styleDoc.setCharacterAttributes(countChar, 1, attributeSet, true);
+
+					countChar++;
+					if(countChar >= texts[textChosen].length()) {
+						countChar = 0;
+						nextGame();
+					}
+
+					StyleConstants.setForeground(attributeSet, YELLOW);
+					styleDoc.setCharacterAttributes(countChar, 1, attributeSet, true);
+				}
+				else {
+					if(countChar != 0)
+						time -= 0.1;
+					StyleConstants.setForeground(attributeSet, RED);
+					styleDoc.setCharacterAttributes(countChar, 1, attributeSet, true);
+				}
 				break;
 		}
     }
@@ -263,12 +302,13 @@ public class game extends JFrame
 		if(!dead()) {
 			time = TIMECONSTANT;
 			timer.restart();
-			timeLeft.setText("Time: " + new DecimalFormat("##.##").format(time));
+			timeLeft.setText("Time: " + df.format(time));
 			clear();
 			runGame();
 		}
 		else {
 			//score visas, avslutas
+			System.out.println("Final score: " + df.format(totalTime));
 		}
 	}
 
@@ -281,22 +321,118 @@ public class game extends JFrame
 	
    class CountdownTimerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-			if ((time -= 0.1) > 0) {
-				totalTime += 0.1;
-                timeLeft.setText("Time: " + new DecimalFormat("##.##").format(time));
-				totalTimeLabel.setText("Total time: " + new DecimalFormat("##.##").format(totalTime));
-            } 
-            else {
-            	totalTime += 0.1;
-                timeLeft.setText("Time's up!");
-                totalTimeLabel.setText("Total time: " + new DecimalFormat("##.##").format(totalTime));
-                timer.stop();
-                timerOver();
-            }
+			if(!dead()) {
+				if((time -= 0.1) > 0) {
+					totalTime += 0.1;
+	                timeLeft.setText("Time: " + df.format(time));
+					totalTimeLabel.setText("Total time: " + df.format(totalTime));
+	            } 
+	            else {
+	            	totalTime += 0.1;
+	                timeLeft.setText("Time's up!");
+	                totalTimeLabel.setText("Total time: " + df.format(totalTime));
+	                timer.stop();
+	                timerOver();
+	            }
+	            switch((int) currentGame) {
+	            	case 0:
+	            	case 1:
+			            if(time < 1) {
+			            	if((time < 1.6 && time > 1.4) || (time < 1.2 && time > 1.0) || (time < 0.8 && time > 0.6) || (time < 0.4 && time > 0.2)) {
+				            	for (int i = 0; i < rows; i++) {
+									for (int j = 0; j < columns; j++) {
+										slots [i] [j].setFont(new Font("SanSerif", Font.PLAIN, 45));
+									}
+								}
+							}
+							else {
+								for (int i = 0; i < rows; i++) {
+									for (int j = 0; j < columns; j++) {
+										slots [i] [j].setFont(new Font("SanSerif", Font.PLAIN, 75));
+									}
+								}
+							}
+			            }
+			       		break;
+			       	case 2:
+			       		break;
+			    }
+	        }
         }
     }
 
 	public void actionPerformed(ActionEvent e) {
 		
 	}
+
+	private void fillGrid() {
+		switch((int) currentGame) {
+			case 0:
+				for(int i = 0; i < rows; i++) {
+					for(int j = 0; j < columns; j++) {
+						char letter = ALPHABET.charAt((int) Math.round(Math.random()*(ALPHABETLENGTH-1)));
+						theGrid[i][j] = String.valueOf(letter);
+					}
+				}
+				break;
+			case 1:
+				for(int i = 0; i < rows; i++) {
+					for(int j = 0; j < columns; j++) {
+						char letter = ALPHABETQWOP.charAt((int) Math.round(Math.random()*(ALPHABETQWOPLENGTH-1)));
+						theGrid[i][j] = String.valueOf(letter);
+					}
+				}
+				break;
+		}
+	}
+
+	private void initSlots() {
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < columns; j++) {
+				slots [i] [j] = new JLabel ();
+				slots [i] [j].setPreferredSize(new Dimension(pieceSize, pieceSize));
+				slots [i] [j].setHorizontalAlignment (SwingConstants.CENTER);
+				slots [i] [j].setBorder (new LineBorder (scorelines));
+				slots [i] [j].setOpaque(true);
+				slots [i] [j].setBackground(backGround);
+				slots [i] [j].setText(theGrid[i][j]);
+				slots [i] [j].setFont(new Font("SanSerif", Font.PLAIN, 65));
+			}
+		}
+	}
+
+	private JPanel createGrid() {
+		pnlGrid.setLayout(new GridLayout(1, 1));
+		pnlGrid.setPreferredSize(new Dimension(GridW, GridH));
+		pnlGrid.setLayout(new GridLayout(rows, columns));
+		
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < columns; j++) {
+				pnlGrid.add(slots[i][j]);
+			}
+		}
+		return pnlGrid;
+	}
+
+	private JPanel createField() {
+		textChosen = (int) Math.round(Math.random() * (TEXTSLENGTH-1));
+		System.out.println("textChosen: " + textChosen);
+
+		textPane.setText(texts[textChosen]);
+		textPane.setFont(new Font("SanSerif", Font.PLAIN, 35));
+		textPane.setEditable(false);
+		textPane.addKeyListener(this);
+		textPane.setFocusable(true);
+		texts[textChosen].toUpperCase();
+		System.out.println("texts[textChosen]: " + texts[textChosen]);
+
+		StyleConstants.setForeground(attributeSet, YELLOW);
+
+		styleDoc.setCharacterAttributes(0, 1, attributeSet, true);
+
+		pnlGrid.add(textPane);
+
+		return pnlGrid;
+	}
+
 }
