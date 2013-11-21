@@ -1,5 +1,3 @@
-
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -21,22 +19,22 @@ public class menu extends JFrame implements MouseListener{
 
 	public menu() throws IOException {
 		
-		GridLayout gridMenu = new GridLayout(4, 0);
+		GridLayout gridMenu = new GridLayout(7, 0);
 		high = new highscore();
 		
 		JLabel header = new JLabel("KOMA", JLabel.CENTER);
 		header.setFont(new Font("SanSerif", Font.PLAIN, 99));
 		
 		startGame = new JLabel("Play game");
-		startGame.setFont(new Font("SanSerif", Font.PLAIN, 30));
+		startGame.setFont(new Font("SanSerif", Font.PLAIN, 40));
 		startGame.addMouseListener(this);
 
 		highscoreMenu = new JLabel("Highscore");
-		highscoreMenu.setFont(new Font("SanSerif", Font.PLAIN, 30));
+		highscoreMenu.setFont(new Font("SanSerif", Font.PLAIN, 40));
 		highscoreMenu.addMouseListener(this);
 
 		quit = new JLabel("Quit game");
-		quit.setFont(new Font("SanSerif", Font.PLAIN, 30));
+		quit.setFont(new Font("SanSerif", Font.PLAIN, 40));
 		quit.addMouseListener(this);
 
 		playerName = new JTextField("Player name", 15);
@@ -49,9 +47,9 @@ public class menu extends JFrame implements MouseListener{
  		}
  		//Highscore not editable
  		txtHighscore.setEditable(false);
-
-
-
+ 		txtHighscore.setOpaque(false);
+ 		highscorePanel.setOpaque(false);
+ 		head.setOpaque(false);
 
 		head.add(header);
 		menu.add(startGame);
@@ -59,12 +57,14 @@ public class menu extends JFrame implements MouseListener{
 		menu.add(quit);
 		menu.add(playerName);
 		menu.setLayout(gridMenu);
+		menu.setBackground(Color.CYAN);
 		highscorePanel.add(txtHighscore);
 
+ 		getContentPane().setBackground(Color.BLUE);
 		//container displaying centerpositioned items
 		Container c = getContentPane();
 	    c.setLayout(new BorderLayout());
-	    c.add(head, BorderLayout.NORTH);
+	    c.add(head, BorderLayout.PAGE_START);
 	    c.add(menu, BorderLayout.EAST);
 	    c.add(highscorePanel, BorderLayout.WEST);
 	    
@@ -84,12 +84,8 @@ public class menu extends JFrame implements MouseListener{
  	}
 
 	/*
-	**ActionListener
+	**MouseListener
 	*/
-	public void actionPerformed(ActionEvent e){
-
-	}
-
 
     public void mousePressed(MouseEvent e) {
     	if(e.getSource() == startGame){
