@@ -8,6 +8,7 @@ import java.awt.event.*;
 import javax.swing.border.LineBorder;
 import java.text.DecimalFormat;
 import java.util.Arrays;
+import java.util.Random;
 import java.io.*;
 
 public class game extends JFrame 
@@ -52,6 +53,7 @@ public class game extends JFrame
 	private static int NUMBEROFGAMES = 3;
 	private int miniGames[] = new int[NUMBEROFGAMES];
 	private double currentGame = 0;
+	private Random random = new Random();
 
 	//mini game - 0
 	private final String ALPHABET = "ABCDEFGHIJKLMNPQRSTUVWXYZ123456789"; //no O or 0
@@ -77,8 +79,6 @@ public class game extends JFrame
 		FlowLayout flow = new FlowLayout();
 		pnlHead.setLayout(flow);
 		pnlHead.setPreferredSize(new Dimension(40, 40));
-
-		System.out.println("TEXTSLENGTH: " + TEXTSLENGTH);
 
 		playerNameLabel = new JLabel();
 		livesLabel = new JLabel();
@@ -159,7 +159,8 @@ public class game extends JFrame
 			started = true;
 		}
 		else 
-			currentGame = Math.round(Math.random() * (miniGames.length - 1));
+			//currentGame = Math.round(Math.random() * (miniGames.length - 1));
+			currentGame = random.nextInt(NUMBEROFGAMES);
 		switch((int) currentGame) {
 			case 0:
 				rows = (int) Math.round(Math.random() * 2 + 2);
