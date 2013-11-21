@@ -62,7 +62,7 @@ public class game extends JFrame
 	private final String ALPHABETQWOP = "WOOOP"; //no O or 0
 	private final int ALPHABETQWOPLENGTH = ALPHABETQWOP.length();
 
-	//mini game - 2
+	//mini game - 2 
 	private final String texts[] = {"3.14159265358979", "This program is written in java.", "This game is so user friendly!",
 									"abcdefghijklm", "nopqrstuvwxyz"};
 	private final int TEXTSLENGTH = texts.length;
