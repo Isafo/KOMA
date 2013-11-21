@@ -1,4 +1,8 @@
 import javax.swing.*;
+import javax.swing.text.DefaultStyledDocument;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.border.LineBorder;
@@ -41,9 +45,11 @@ public class game extends JFrame
 	//player
 	String name = "slots slots slots slots slots slots ERRBODY SLOTS SLOTS SLOTS SLOTS";
 	private int lives = 4;
+	private boolean started = false;
+	private boolean timerStarted = false;
 
 	//Mini games
-	private static int NUMBEROFGAMES = 2;
+	private static int NUMBEROFGAMES = 3;
 	private int miniGames[] = new int[NUMBEROFGAMES];
 	private double currentGame = 0;
 
@@ -57,16 +63,21 @@ public class game extends JFrame
 	private final int ALPHABETQWOPLENGTH = ALPHABETQWOP.length();
 
 	//mini game - 2
-	private final String texts[] = {"for(int i = 0; i < n; i++) {}", "3.1415926535897932384"};
+	private final String texts[] = {"3.1415926535897932384", "This program is written in java", "this game is so user friendly"};
 	private final int TEXTSLENGTH = texts.length;
 	private int textChosen, countChar = 0;
 	private JLabel field;
+	private StyledDocument styleDoc = new DefaultStyledDocument();
+	private JTextPane textPane = new JTextPane(styleDoc);
+	private SimpleAttributeSet attributeSet = new SimpleAttributeSet();	
 	
 	public game() throws IOException {
 		//header
 		FlowLayout flow = new FlowLayout();
 		pnlHead.setLayout(flow);
 		pnlHead.setPreferredSize(new Dimension(40, 40));
+
+		System.out.println("TEXTSLENGTH: " + TEXTSLENGTH);
 
 		playerNameLabel = new JLabel();
 		livesLabel = new JLabel();
@@ -88,7 +99,7 @@ public class game extends JFrame
 		
 		if(true) {
 			timer = new Timer(100, new CountdownTimerListener());
-			timer.start();
+			//timer.start();
 			timeLeft.setText("Time: " + df.format(time));
 			timeLeft.setFont(new Font("SanSerif", Font.PLAIN, FONTSIZE));
 			pnlHead.add(timeLeft);
@@ -126,7 +137,6 @@ public class game extends JFrame
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        //pnlHead.requestFocusInWindow();
 		runGame();	
 	}
 
@@ -144,7 +154,12 @@ public class game extends JFrame
 	}
 
 	public void selectRandomMiniGame() {
-		currentGame = Math.round(Math.random() * (miniGames.length - 1));
+		if(!started) {
+			currentGame = 2;
+			started = true;
+		}
+		else 
+			currentGame = Math.round(Math.random() * (miniGames.length - 1));
 		switch((int) currentGame) {
 			case 0:
 				rows = (int) Math.round(Math.random() * 2 + 2);
@@ -188,6 +203,7 @@ public class game extends JFrame
 					for(int i = 0; i < rows; i++){
 						slots [i] [j].setBackground(backGround);
 						pnlGrid.remove(slots[i][j]);
+						pnlGrid.removeAll();
 					}
 				}
 				countRows = 0;
@@ -198,18 +214,28 @@ public class game extends JFrame
 					for(int i = 0; i < rows; i++){
 						slots [i] [j].setBackground(backGround);
 						pnlGrid.remove(slots[i][j]);
+						pnlGrid.removeAll();
 					}
 				}
 				countRows = 0;
 				countColumns = 0;
 				break;
 			case 2:
-				pnlGrid.remove(field);
+				countChar = 0;
+				pnlGrid.remove(textPane);
+				pnlGrid.removeAll();
 				break;
 		}
 	}
 	
 	public void keyPressed(KeyEvent e) {
+		if(!timerStarted) {
+			timer.start();
+			timerStarted = true;
+		}
+		if(dead())
+			return;
+		
 		char c = e.getKeyChar();
 		String keyString;
         switch((int) currentGame) {
@@ -233,18 +259,30 @@ public class game extends JFrame
 	            	}
 	            }
 	            else {
-	            	time -= 0.2;
-	            	slots[countRows][countColumns].setBackground(RED);
+	            	if(countRows + countColumns != 0)
+	            		time -= 0.2;
+            		slots[countRows][countColumns].setBackground(RED);
 	            }
 				break;
 			case 2:
-				keyString = String.valueOf(c);
-				if(keyString.equals(texts[textChosen].charAt(countChar))) {
+				if(c == texts[textChosen].charAt(countChar)) {
+					StyleConstants.setForeground(attributeSet, GREEN);
+					styleDoc.setCharacterAttributes(countChar, 1, attributeSet, true);
+
 					countChar++;
 					if(countChar >= texts[textChosen].length()) {
 						countChar = 0;
 						nextGame();
 					}
+
+					StyleConstants.setForeground(attributeSet, YELLOW);
+					styleDoc.setCharacterAttributes(countChar, 1, attributeSet, true);
+				}
+				else {
+					if(countChar != 0)
+						time -= 0.1;
+					StyleConstants.setForeground(attributeSet, RED);
+					styleDoc.setCharacterAttributes(countChar, 1, attributeSet, true);
 				}
 				break;
 		}
@@ -377,13 +415,22 @@ public class game extends JFrame
 	}
 
 	private JPanel createField() {
-		field = new JLabel();
-		textChosen = (int) Math.round(Math.random() * TEXTSLENGTH-1);
+		textChosen = (int) Math.round(Math.random() * (TEXTSLENGTH-1));
+		System.out.println("textChosen: " + textChosen);
 
-		field.setText(texts[textChosen]);
-		field.setFont(new Font("SanSerif", Font.PLAIN, 35));
+		textPane.setText(texts[textChosen]);
+		textPane.setFont(new Font("SanSerif", Font.PLAIN, 35));
+		textPane.setEditable(false);
+		textPane.addKeyListener(this);
+		textPane.setFocusable(true);
+		texts[textChosen].toUpperCase();
+		System.out.println("texts[textChosen]: " + texts[textChosen]);
 
-		pnlGrid.add(field);
+		StyleConstants.setForeground(attributeSet, YELLOW);
+
+		styleDoc.setCharacterAttributes(0, 1, attributeSet, true);
+
+		pnlGrid.add(textPane);
 
 		return pnlGrid;
 	}
