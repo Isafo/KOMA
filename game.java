@@ -63,7 +63,8 @@ public class game extends JFrame
 	private final int ALPHABETQWOPLENGTH = ALPHABETQWOP.length();
 
 	//mini game - 2
-	private final String texts[] = {"3.1415926535897932384", "This program is written in java", "this game is so user friendly"};
+	private final String texts[] = {"3.14159265358979", "This program is written in java.", "This game is so user friendly!",
+									"abcdefghijklm", "nopqrstuvwxyz"};
 	private final int TEXTSLENGTH = texts.length;
 	private int textChosen, countChar = 0;
 	private JLabel field;
@@ -161,8 +162,8 @@ public class game extends JFrame
 			currentGame = Math.round(Math.random() * (miniGames.length - 1));
 		switch((int) currentGame) {
 			case 0:
-				rows = (int) Math.round(Math.random() * 3 + 1);
-				columns = (int) Math.round(Math.random() * 1 + 3);
+				rows = (int) Math.round(Math.random() * 2 + 2);
+				columns = (int) Math.round(Math.random() * 0.75 + 3);
 				break;
 			case 1:
 				rows = 4;
