@@ -161,11 +161,11 @@ public class game extends JFrame
 			currentGame = Math.round(Math.random() * (miniGames.length - 1));
 		switch((int) currentGame) {
 			case 0:
-				rows = (int) Math.round(Math.random() * 2 + 2);
-				columns = (int) Math.round(Math.random() * 2 + 2);
+				rows = (int) Math.round(Math.random() * 3 + 1);
+				columns = (int) Math.round(Math.random() * 1 + 3);
 				break;
 			case 1:
-				rows = 3;
+				rows = 4;
 				columns = 4;
 				break;
 			case 2:
