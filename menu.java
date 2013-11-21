@@ -50,7 +50,10 @@ public class menu extends JFrame implements MouseListener{
  		//Highscore not editable
  		txtHighscore.setEditable(false);
 
-
+		
+ 		//SŠtter backgrunden i textarean
+		txtHighscore.setBackground(new Color(0, 0, 0,0));
+		
 
 
 		head.add(header);
