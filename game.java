@@ -99,7 +99,6 @@ public class game extends JFrame
 		
 		if(true) {
 			timer = new Timer(100, new CountdownTimerListener());
-			//timer.start();
 			timeLeft.setText("Time: " + df.format(time));
 			timeLeft.setFont(new Font("SanSerif", Font.PLAIN, FONTSIZE));
 			pnlHead.add(timeLeft);
@@ -141,8 +140,8 @@ public class game extends JFrame
 	}
 
 	public void nextGame() {
-		totalTime += time*2;
-		totalExtraTime += time*2;
+		totalTime += time*1.5;
+		totalExtraTime += time*1.5;
 		time = TIMECONSTANT;
 		timer.restart();
 		timeLeft.setText("Time: " + df.format(time));
@@ -276,6 +275,7 @@ public class game extends JFrame
 					}
 
 					StyleConstants.setForeground(attributeSet, YELLOW);
+					StyleConstants.setUnderline(attributeSet, true);
 					styleDoc.setCharacterAttributes(countChar, 1, attributeSet, true);
 				}
 				else {
@@ -416,7 +416,6 @@ public class game extends JFrame
 
 	private JPanel createField() {
 		textChosen = (int) Math.round(Math.random() * (TEXTSLENGTH-1));
-		System.out.println("textChosen: " + textChosen);
 
 		textPane.setText(texts[textChosen]);
 		textPane.setFont(new Font("SanSerif", Font.PLAIN, 35));
@@ -424,9 +423,9 @@ public class game extends JFrame
 		textPane.addKeyListener(this);
 		textPane.setFocusable(true);
 		texts[textChosen].toUpperCase();
-		System.out.println("texts[textChosen]: " + texts[textChosen]);
 
 		StyleConstants.setForeground(attributeSet, YELLOW);
+		StyleConstants.setUnderline(attributeSet, true);
 
 		styleDoc.setCharacterAttributes(0, 1, attributeSet, true);
 
