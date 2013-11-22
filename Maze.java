@@ -27,7 +27,7 @@ public class Maze extends JFrame {
 		
 		randomInt();
 		
-		int temp = 1;
+		int temp = 1; //Only one bluprint is available ATM
 		
 		if(temp == 1)
 			filePath = "blueprint.txt";
