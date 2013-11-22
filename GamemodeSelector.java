@@ -21,7 +21,7 @@ public class GamemodeSelector{
 	private int miniGames[] = new int[NUMBEROFGAMES];
 
 	public GamemodeSelector() throws IOException {
-			while(!notDead){
+		while(!notDead){
 			selectRandomMiniGame();
 
 			currentGame = 0;
@@ -37,8 +37,7 @@ public class GamemodeSelector{
 					//run minigame 3
 					// minigame3(rows, columns, currentGame);
 			}
-
-			//nextGame();
+		//nextGame();
 		}
 	}
 
