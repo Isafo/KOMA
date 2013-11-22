@@ -204,7 +204,8 @@ public class menu extends JFrame implements MouseListener{
     			p = "player";
 
     		try {
-                game theGame = new game();
+                //game theGame = new game();
+                Maze gamemode = new Maze();
             } catch (IOException e1) {
             	// TODO Auto-generated catch block
                 e1.printStackTrace();

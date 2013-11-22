@@ -8,7 +8,7 @@ public class Maze extends JFrame {
 	Field map;
 	public String filePath;
 	
-	public Maze(){
+	public Maze() throws IOException {
 	
 		randomMap();
 		
@@ -69,9 +69,5 @@ public class Maze extends JFrame {
 		for(Player b : map.getPlayers()){
 			b.draw(g);
 		}
-	}
-		
-	public static void main(String[] args){
-		new Maze();
 	}
 }
