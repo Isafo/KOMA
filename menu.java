@@ -140,9 +140,9 @@ public class menu extends JFrame implements MouseListener{
 
             txtHighscore.setEditable(false);
             txtHighscore.setBackground(new java.awt.Color(153, 153, 153));
-            txtHighscore.setColumns(20);
-            txtHighscore.setRows(10);
-            txtHighscore.setText("");
+            txtHighscore.setColumns(10);
+            txtHighscore.setRows(7);
+            txtHighscore.setText("Highscore" + "\n");
             txtHighscore.setBorder(null);
             txtHighscore.setFocusable(false);
             jScrollPane1.setViewportView(txtHighscore);
