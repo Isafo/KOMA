@@ -35,8 +35,6 @@ public class Field {
 		
 		input.close();
 		
-		int count = 1;
-		
 		//checks the row
 		for (int i = 0; i < lines.size(); i++){
 			//Checks every char in the row
@@ -47,11 +45,11 @@ public class Field {
 				switch (symbol){
 					
 				case '#': //add a wall
-					walls.add(new Wall(j * 30 + 8, i * 30 + 30));
+					walls.add(new Wall(j * 30, i * 30));
 					break;
 				
 				case 'P': // add a player
-					players.add(new Player(j * 30 + 8, i * 30 + 30, count));
+					players.add(new Player(j * 30 + 3, i * 30));
 					break;
 				}
 			}

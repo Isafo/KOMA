@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class menu extends JFrame implements MouseListener{
 	
@@ -48,9 +50,7 @@ public class menu extends JFrame implements MouseListener{
 
         setLocationRelativeTo(null); //makes it so that the window opens in center of the screen
         setResizable(false);
-		setVisible(true);
-
-	  	
+		setVisible(true);	  	
 	}
     
     /*
