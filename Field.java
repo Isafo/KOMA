@@ -1,11 +1,14 @@
 import java.util.*;
+import java.awt.Rectangle;
 import java.io.*;
 
 public class Field {
 
-	ArrayList<Wall> walls;
+	static ArrayList<Wall> walls;
 	ArrayList<Player> players;
 	String filePath;
+	private static int howMany;
+	int xWall, yWall;
 	
 	public Field(String path){
 		walls = new ArrayList<Wall>();
@@ -54,10 +57,17 @@ public class Field {
 				}
 			}
 		}
+		
+		howMany = walls.size();
+		
 	}
 	
 	public ArrayList<Wall> getWalls(){
 		return walls;
+	}
+	
+	public static int getHowManyWalls(){
+		return howMany;
 	}
 	
 	public ArrayList<Player> getPlayers(){
