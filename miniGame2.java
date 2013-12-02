@@ -3,15 +3,9 @@ import javax.swing.text.DefaultStyledDocument;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
-
 import java.awt.*;
 import java.awt.event.*;
-
-import javax.swing.border.LineBorder;
-
 import java.text.DecimalFormat;
-import java.util.Arrays;
-import java.util.Random;
 import java.io.*;
 
 public class miniGame2 implements ActionListener, KeyListener {
@@ -38,8 +32,8 @@ public class miniGame2 implements ActionListener, KeyListener {
 	private final Color BLACK = new Color(0, 0, 0);
 
 	//mini game - 2 
-	public final String texts[] = {"3.14159265358979", "this is written in java.", "this game is user friendly",
-									"abcdefghijklm", "nopqrstuvwxyz"};
+	public final String texts[] = {"3.1415926535897", "this is written in java.", "this game is user friendly",
+									"abcdefghijklm", "nopqrstuvwxyz", "nu är det jul igen", "kommunikation och användargränssnitt"};
 	public final int TEXTSLENGTH = texts.length;
 	public int textChosen, countChar = 0;
 	public JLabel field;
@@ -141,6 +135,7 @@ public class miniGame2 implements ActionListener, KeyListener {
 		else {
 			//score visas, avslutas
 			System.out.println("Final score: " + df.format(game.totalTime));
+			game.saveScore();
 		}
 	}
 

@@ -1,17 +1,8 @@
 import javax.swing.*;
-import javax.swing.text.DefaultStyledDocument;
-import javax.swing.text.SimpleAttributeSet;
-import javax.swing.text.StyleConstants;
-import javax.swing.text.StyledDocument;
-
 import java.awt.*;
 import java.awt.event.*;
-
 import javax.swing.border.LineBorder;
-
 import java.text.DecimalFormat;
-import java.util.Arrays;
-import java.util.Random;
 import java.io.*;
 
 public class miniGame0 implements ActionListener, KeyListener {
@@ -50,8 +41,11 @@ public class miniGame0 implements ActionListener, KeyListener {
 		 frame.totalExtraTimeLabel.setText("Extra time: " + df.format(game.totalExtraTime));
 		
 		timer = new Timer(100, new CountdownTimerListener());
-		if(!game.firstMode)
+		if(!game.firstMode) {
 			timer.start();
+		}
+		else
+			time = TIMECONSTANTFIRST;
 		 
 		setupGame();
 	}
@@ -146,6 +140,7 @@ public class miniGame0 implements ActionListener, KeyListener {
 		else {
 			//score visas, avslutas
 			System.out.println("Final score: " + df.format(game.totalTime));
+			game.saveScore();
 		}
 	}
 

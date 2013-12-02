@@ -1,16 +1,5 @@
-import javax.swing.*;
-import javax.swing.text.DefaultStyledDocument;
-import javax.swing.text.SimpleAttributeSet;
-import javax.swing.text.StyleConstants;
-import javax.swing.text.StyledDocument;
-
 import java.awt.*;
 import java.awt.event.*;
-
-import javax.swing.border.LineBorder;
-
-import java.text.DecimalFormat;
-import java.util.Arrays;
 import java.util.Random;
 import java.io.*;
 
@@ -99,6 +88,10 @@ public class game implements ActionListener, KeyListener{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void saveScore() {
+		highscore.sort(menu.getPlayerName(), totalTime);
 	}
 	
 	public void keyPressed(KeyEvent e) {
