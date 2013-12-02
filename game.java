@@ -16,8 +16,8 @@ public class game implements ActionListener, KeyListener{
 	//Mini games
 	public static int NUMBEROFGAMES = 3;
 	public int miniGames[] = new int[NUMBEROFGAMES];
-	public static double currentGame = 0;
-	public static double lastGame = 0;
+	public static int currentGame = 0;
+	public static int lastGame = 0;
 	public static Random random = new Random();
 	public static miniGame0 game0;
 	public static miniGame1 game1;
@@ -54,7 +54,7 @@ public class game implements ActionListener, KeyListener{
 		game1 = null;
 		game2 = null;
 
-		switch((int) currentGame) {
+		switch(currentGame) {
 		case 0:
 			try {
 				game0 = new miniGame0();
@@ -91,11 +91,11 @@ public class game implements ActionListener, KeyListener{
 	}
 
 	public void saveScore() {
-		highscore.sort(menu.getPlayerName(), totalTime);
+		highscore.sort(menu.getPlayerName(), totalTime); //sparar score
 	}
 	
 	public void keyPressed(KeyEvent e) {
-		switch((int) currentGame) {
+		switch(currentGame) {
 			case 0:
 				game0.keyPressed(e);
 				break;

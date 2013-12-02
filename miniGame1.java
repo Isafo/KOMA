@@ -26,8 +26,7 @@ public class miniGame1 implements ActionListener, KeyListener {
 	private final Color GREEN = new Color(0, 245, 0);
 	private final Color YELLOW = new Color(245, 245, 0);
 	private final Color RED = new Color(245, 0, 0);
-	private final Color BLACK = new Color(0, 0, 0);
-
+	
 	//mini game - 1
 	public final String ALPHABETQWOP = "WOOOP"; //no O or 0
 	public final int ALPHABETQWOPLENGTH = ALPHABETQWOP.length();
@@ -131,9 +130,6 @@ public class miniGame1 implements ActionListener, KeyListener {
 		game.lives--;
 		frame.livesLabel.setText("Lives remaining: " + String.valueOf(game.lives));
 		if(!dead()) {
-			time = TIMECONSTANT;
-			timer.restart();
-			frame.timeLeft.setText("Time: " + df.format(time));
 			nextGameMode();
 		}
 		else {

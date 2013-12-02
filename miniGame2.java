@@ -18,18 +18,14 @@ public class miniGame2 implements ActionListener, KeyListener {
 	//grid
 	public int rows = 12;
 	public int columns = 12;
-	private String[][] theGrid = new String[rows][columns];
-	private JLabel[][] slots = new JLabel[rows][columns];
 	private final int pieceSize = 50;
 	public Color scorelines = new Color(50, 50, 50);
 	public final int GridW = rows * pieceSize;
 	public final int GridH = columns * pieceSize;
 
-	private Color backGround = new Color(245, 245, 245);
 	private final Color GREEN = new Color(0, 245, 0);
 	private final Color YELLOW = new Color(245, 245, 0);
 	private final Color RED = new Color(245, 0, 0);
-	private final Color BLACK = new Color(0, 0, 0);
 
 	//mini game - 2 
 	public final String texts[] = {"3.1415926535897", "this is written in java.", "this game is user friendly",
@@ -127,9 +123,6 @@ public class miniGame2 implements ActionListener, KeyListener {
 		game.lives--;
 		frame.livesLabel.setText("Lives remaining: " + String.valueOf(game.lives));
 		if(!dead()) {
-			// time = TIMECONSTANT;
-			// timer.restart();
-			// frame.timeLeft.setText("Time: " + df.format(time));
 			nextGameMode();
 		}
 		else {
