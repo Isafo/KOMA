@@ -1,6 +1,3 @@
-
-
-
 public class person 
 {
 	
@@ -8,34 +5,29 @@ public class person
 	private String seconds;
 	
 	//Konstructor
-	public person(String theName, String theSeconds)
-	{
+	public person(String theName, String theSeconds){
 		name = theName;
 		seconds = theSeconds;
 	}
 	
-	public void setName(String theName)
-	{
+	public void setName(String theName){
 		name = theName;
 	}
 
 	
-	public void setSeconds(String theSeconds)
-	{
+	public void setSeconds(String theSeconds){
 		seconds = theSeconds;
 	}
 	
 
 	
 	//get the name on the person
-	public String getName()
-	{
+	public String getName(){
 		return name;
 	}
 	
 	//get the points(seconds)
-	public String getSeconds()
-	{
+	public String getSeconds(){
 		return seconds;
 	}
 	
