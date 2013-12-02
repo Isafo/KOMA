@@ -14,13 +14,13 @@ public class menu extends JFrame implements ActionListener{
 	JButton startGame, setPlayerName;
 	JTextField playerNameField;
 	JTextArea txtHighscore;
-	highscore high;
+	//highscore high;
 	
 	static String p = "Player"; 
 
 	public menu() throws IOException {
 		
-		high = new highscore();
+		//high = new highscore();
 		FlowLayout flow = new FlowLayout();
 		
 		JLabel start = new JLabel("Epic game!", JLabel.RIGHT);
@@ -30,9 +30,9 @@ public class menu extends JFrame implements ActionListener{
 		//add Hiscores
 		txtHighscore = new JTextArea();
 		openFile();
-		for(int i = 0;  i < 5; i++){
-		txtHighscore.append(i+1 + ". " + high.getNames(i) + " " + high.getScores(i) + "s\n");
-		}
+		//for(int i = 0;  i < 5; i++){
+		//txtHighscore.append(i+1 + ". " + high.getNames(i) + " " + high.getScores(i) + "s\n");
+		//}
 		
 		
 		startGame = new JButton("Play game");
@@ -75,7 +75,8 @@ public class menu extends JFrame implements ActionListener{
 		//if startGame button is clicked
 		if(e.getSource() == startGame){
 			try {
-				game theGame = new game();
+				frame theFrame = new frame();
+				//game theGame = new game();
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -99,10 +100,10 @@ public class menu extends JFrame implements ActionListener{
 	public void openFile()
 	{	
 		
-		try{
-			high.load();
-		}
-		catch(IOException e){}
+		//try{
+			//high.load();
+		//}
+		//catch(IOException e){}
 		
 		
 	}
