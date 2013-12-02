@@ -5,18 +5,17 @@ import javax.swing.*;
 
 //Player is added if symbol == P
 
-public class Player extends JPanel implements ActionListener {
+public class Player extends JPanel {
 
 	//movestuff
-	double xCord = 0, yCord = 0, velx = 0, vely = 0;
-	Timer t = new Timer();
+	double xCord = 0, yCord = 0;
+	static double vely = 0, velx = 0;
 	int width, height, x, y;
 	
 	public Player(int x, int y){
 		this.x = x;
 		this.y = y;
-		
-		t.start();
+
 		setFocusable(true);
 		setFocusTraversalKeysEnabled(false);
 		
@@ -25,36 +24,35 @@ public class Player extends JPanel implements ActionListener {
 	}
 	
 	public void draw(Graphics g){
+		setPosition();
 		g.setColor(Color.BLUE);
 		g.fillOval(x, y, width, height);	
 	}
 	
 	//movefunctions
 	
-	public void up(){
+	public static void up(){
 		vely = -1.5;
 		velx = 0;
 	}
 	
-	public void down(){
+	public static void down(){
 		vely = 1.5;
 		velx = 0;
 	}
 	
-	public void left(){
+	public static void left(){
 		vely = 0;
 		velx = -1.5;
 	}
 	
-	public void right(){
+	public static void right(){
 		vely = 0;
 		velx = 1.5;
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		
-		repaint();
+	public void setPosition(){	
+		//to get position if the blue circle has been movedby the user
 		x += velx;
 		y += vely;
 	}
