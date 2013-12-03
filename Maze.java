@@ -61,7 +61,10 @@ public class Maze extends JFrame {
 		Action upAction = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
 				Player.up();
-				pane.repaint();
+				if(checkCollision())
+					pane.repaint();
+				else
+					Player.resetPosition();
 			}
 		};
 
@@ -70,7 +73,10 @@ public class Maze extends JFrame {
 		Action downAction = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
 				Player.down();
-				pane.repaint();
+				if(checkCollision())
+					pane.repaint();
+				else
+					Player.resetPosition();
 			}
 		};
 
@@ -79,7 +85,10 @@ public class Maze extends JFrame {
 		Action leftAction = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
 				Player.left();
-				pane.repaint();
+				if(checkCollision())
+					pane.repaint();
+				else
+					Player.resetPosition();
 			}
 		};
 		
@@ -88,7 +97,10 @@ public class Maze extends JFrame {
 		Action rightAction = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
 				Player.right();
-				pane.repaint();
+				if(checkCollision())
+					pane.repaint();
+				else
+					Player.resetPosition();
 			}
 		};
 
@@ -131,6 +143,22 @@ public class Maze extends JFrame {
 		number = MIN + ((int) Math.random() * (MAX - MIN + 1));
 		
 		//return number;
+	}
+
+    //returns false if collision is detected
+    public boolean checkCollision(){
+   
+        Rectangle player = Player.getPlayer();
+
+        for(Wall b : map.getWalls()){
+            Rectangle wall = new Rectangle(b.x, b.y, b.width, b.height);
+
+			if(player.intersects(wall)){
+				System.out.println("collision");
+           	    return false;
+           	}
+		}
+        return true;
 	}
 }
 

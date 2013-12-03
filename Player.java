@@ -21,23 +21,13 @@ public class Player extends JPanel {
 		setFocusable(true);
 		setFocusTraversalKeysEnabled(false);
 		
-		width = 25;
-		height = 25;
+		width = 20;
+		height = 20;
 	}
 	
 	public void draw(Graphics g){
-		setPosition();
-		if(checkCollision()){
-			g.setColor(Color.BLUE);
-			g.fillOval(x, y, width, height);
-		}
-		
-		else{
-			x -= velx;
-			y -= vely;
-			g.setColor(Color.BLUE);
-			g.fillOval(x, y, width, height);
-		}
+		g.setColor(Color.BLUE);
+		g.fillOval(x, y, width, height);
 	}
 	
 	//movefunctions
@@ -45,44 +35,41 @@ public class Player extends JPanel {
 	public static void up(){
 		vely = -3.5;
 		velx = 0;
+		setPosition();
 	}
 	
 	public static void down(){
 		vely = 3.5;
 		velx = 0;
+		setPosition();
 	}
 	
 	public static void left(){
 		vely = 0;
 		velx = -3.5;
+		setPosition();
 	}
 	
 	public static void right(){
 		vely = 0;
 		velx = 3.5;
+		setPosition();
 	}
 
-	public void setPosition(){	
+	public static void setPosition(){	
 		//to get position if the blue circle has been movedby the user
 		x += velx;
 		y += vely;
 	}
+
+	public static void resetPosition(){	
+		//reset position if collision was detected
+		x -= velx;
+		y -= vely;
+		System.out.println(x + "  " + y + "resert");
+	}
 	
 	public static Rectangle getPlayer(){
 		return new Rectangle (x, y, width, height);
-	}
-	
-	//returns false if collision is detected
-	public boolean checkCollision(){
-		
-		Rectangle player = getPlayer();
-		Rectangle wall = Wall.getWall();
-		
-		for(int j = 0; j < Field.getHowManyWalls(); j++){
-			if(player.intersects(wall)){
-				return false;
-			}
-		}
-		return true;
-	}
+	}	
 }
