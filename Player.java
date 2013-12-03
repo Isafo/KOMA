@@ -43,23 +43,23 @@ public class Player extends JPanel {
 	//movefunctions
 	
 	public static void up(){
-		vely = -2.5;
+		vely = -4;
 		velx = 0;
 	}
 	
 	public static void down(){
-		vely = 2.5;
+		vely = 4;
 		velx = 0;
 	}
 	
 	public static void left(){
 		vely = 0;
-		velx = -2.5;
+		velx = -4;
 	}
 	
 	public static void right(){
 		vely = 0;
-		velx = 2.5;
+		velx = 4;
 	}
 
 	public void setPosition(){	

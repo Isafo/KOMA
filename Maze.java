@@ -22,7 +22,7 @@ public class Maze extends JFrame {
 
 
 		//panel for the game graphics
-		JPanel pane = new JPanel(){
+		final JPanel pane = new JPanel(){
 			@Override
 			public void paint(Graphics g){		
 
