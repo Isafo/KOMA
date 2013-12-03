@@ -5,7 +5,7 @@ import java.awt.Rectangle;
 
 public class Wall {
 	
-	static int width, height, x, y;
+	int width, height, x, y;
 	
 	public Wall(int x, int y){
 		this.x = x;
@@ -13,11 +13,6 @@ public class Wall {
 		
 		width = 30;
 		height = 30;
-	}
-	
-	//returns the bounds of a wall
-	public static Rectangle getWall(){
-		return new Rectangle (x, y, width, height);
 	}
 	
 	public void draw(Graphics g){

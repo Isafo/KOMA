@@ -8,7 +8,7 @@ public class Maze extends JFrame {
 
 	private Color background = new Color(35, 204, 80);
 	Field map;
-	Header header;
+	//Header header;
 	public String filePath;
 	
 	public Maze() throws IOException {
@@ -18,7 +18,7 @@ public class Maze extends JFrame {
 		randomMap();
 		
 		map = new Field(filePath);
-		header = new Header();
+		//header = new Header();
 
 
 		//panel for the game graphics
@@ -43,11 +43,11 @@ public class Maze extends JFrame {
 		};
 
 		//panel for header
-		JPanel headerPane = new JPanel();
+		//JPanel headerPane = new JPanel();
 
-		headerPane.add(header);
+		//headerPane.add(header);
 
-		frame.add(header, BorderLayout.NORTH);
+		//frame.add(header, BorderLayout.NORTH);
         frame.add(pane);
         frame.setSize(456, 450);
 		frame.setResizable(false);
@@ -131,6 +131,25 @@ public class Maze extends JFrame {
 		number = MIN + ((int) Math.random() * (MAX - MIN + 1));
 		
 		//return number;
+	}
+	
+	//returns false if collision is detected
+	public boolean checkCollision(){
+
+		for(Wall b : map.getWalls()){
+			Rectangle wall = new Rectangle(b.x, b.y, b.width, b.height);
+
+			for(Player p : map.getPlayers()){
+				Rectangle player = new Rectangle(p.x, p.y, p.width, p.height);
+			}
+			
+			for(int j = 0; j < Field.getHowManyWalls(); j++){
+				if(player.intersects(wall)){
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 }
 
