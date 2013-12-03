@@ -1,22 +1,23 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
+
 import javax.management.timer.Timer;
 import javax.swing.*;
 
 //Player is added if symbol == P
 
-public class Player extends JPanel implements ActionListener {
+public class Player extends JPanel {
 
 	//movestuff
-	double xCord = 0, yCord = 0, velx = 0, vely = 0;
-	Timer t = new Timer();
-	int width, height, x, y;
+	double xCord = 0, yCord = 0;
+	static double vely = 0, velx = 0;
+	static int width, height, x, y;
 	
 	public Player(int x, int y){
 		this.x = x;
 		this.y = y;
-		
-		t.start();
+
 		setFocusable(true);
 		setFocusTraversalKeysEnabled(false);
 		
@@ -25,37 +26,63 @@ public class Player extends JPanel implements ActionListener {
 	}
 	
 	public void draw(Graphics g){
-		g.setColor(Color.BLUE);
-		g.fillOval(x, y, width, height);	
+		setPosition();
+		if(checkCollision()){
+			g.setColor(Color.BLUE);
+			g.fillOval(x, y, width, height);
+		}
+		
+		else{
+			x -= velx;
+			y -= vely;
+			g.setColor(Color.BLUE);
+			g.fillOval(x, y, width, height);
+		}
 	}
 	
 	//movefunctions
 	
-	public void up(){
-		vely = -1.5;
+	public static void up(){
+		vely = -2.5;
 		velx = 0;
 	}
 	
-	public void down(){
-		vely = 1.5;
+	public static void down(){
+		vely = 2.5;
 		velx = 0;
 	}
 	
-	public void left(){
+	public static void left(){
 		vely = 0;
-		velx = -1.5;
+		velx = -2.5;
 	}
 	
-	public void right(){
+	public static void right(){
 		vely = 0;
-		velx = 1.5;
+		velx = 2.5;
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		
-		repaint();
+	public void setPosition(){	
+		//to get position if the blue circle has been movedby the user
 		x += velx;
 		y += vely;
+	}
+	
+	public static Rectangle getPlayer(){
+		return new Rectangle (x, y, width, height);
+	}
+	
+	//returns false if collision is detected
+	public boolean checkCollision(){
+		
+		Rectangle player = getPlayer();
+		Rectangle wall = Wall.getWall();
+		
+		for(int j = 0; j < Field.getHowManyWalls(); j++){
+			if(player.intersects(wall)){
+				return false;
+			}
+		}
+		return true;
 	}
 }

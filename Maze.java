@@ -55,31 +55,40 @@ public class Maze extends JFrame {
 		frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
 
+		
+		//Keystroke for moving blue circle up
 		KeyStroke upKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0, false);
 		Action upAction = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
-				System.out.println("upp");
+				Player.up();
+				pane.repaint();
 			}
 		};
 
+		//Keystroke for moving blue circle down
 		KeyStroke downKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0, false);
 		Action downAction = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
-				System.out.println("down");
+				Player.down();
+				pane.repaint();
 			}
 		};
 
+		//Keystroke for moving blue circle left
 		KeyStroke leftKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0, false);
 		Action leftAction = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
-				System.out.println("left");
+				Player.left();
+				pane.repaint();
 			}
 		};
-
+		
+		//Keystroke for moving blue circle right
 		KeyStroke rightKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0, false);
 		Action rightAction = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
-				System.out.println("right");
+				Player.right();
+				pane.repaint();
 			}
 		};
 
