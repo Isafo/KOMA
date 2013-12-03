@@ -8,18 +8,22 @@ public class Maze extends JFrame {
 
 	private Color background = new Color(35, 204, 80);
 	Field map;
+	Header header;
 	public String filePath;
 	
 	public Maze() throws IOException {
 
-		JFrame frame = new JFrame("test");
-	
+		JFrame frame = new JFrame("Maze");
+
 		randomMap();
 		
 		map = new Field(filePath);
+		header = new Header();
 
+
+		//panel for the game graphics
 		JPanel pane = new JPanel(){
-			@Override		
+			@Override
 			public void paint(Graphics g){		
 
 				//background-color
@@ -38,8 +42,14 @@ public class Maze extends JFrame {
 			};
 		};
 
+		//panel for header
+		JPanel headerPane = new JPanel();
+
+		headerPane.add(header);
+
+		frame.add(header, BorderLayout.NORTH);
         frame.add(pane);
-        frame.setSize(467, 420);
+        frame.setSize(456, 450);
 		frame.setResizable(false);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
