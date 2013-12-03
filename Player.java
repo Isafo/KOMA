@@ -21,8 +21,8 @@ public class Player extends JPanel {
 		setFocusable(true);
 		setFocusTraversalKeysEnabled(false);
 		
-		width = 30;
-		height = 30;
+		width = 25;
+		height = 25;
 	}
 	
 	public void draw(Graphics g){
@@ -43,23 +43,23 @@ public class Player extends JPanel {
 	//movefunctions
 	
 	public static void up(){
-		vely = -4;
+		vely = -3.5;
 		velx = 0;
 	}
 	
 	public static void down(){
-		vely = 4;
+		vely = 3.5;
 		velx = 0;
 	}
 	
 	public static void left(){
 		vely = 0;
-		velx = -4;
+		velx = -3.5;
 	}
 	
 	public static void right(){
 		vely = 0;
-		velx = 4;
+		velx = 3.5;
 	}
 
 	public void setPosition(){	
