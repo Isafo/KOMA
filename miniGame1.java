@@ -126,7 +126,7 @@ public class miniGame1 implements ActionListener, KeyListener {
 
     }
 
-	public void timerOver() {
+	public void timerOver() throws IOException {
 		game.lives--;
 		frame.livesLabel.setText("Lives remaining: " + String.valueOf(game.lives));
 		if(!dead()) {
@@ -158,7 +158,11 @@ public class miniGame1 implements ActionListener, KeyListener {
 	            	frame.timeLeft.setText("Time's up!");
 	            	frame.totalTimeLabel.setText("Total time: " + df.format(game.totalTime));
 	                timer.stop();
+	                try{
 	                timerOver();
+	                } catch(IOException e1) {
+	                	e1.printStackTrace();
+	                }
 	            }
 	            if(time < 1) {
 	            	if((time < 1.6 && time > 1.4) || (time < 1.2 && time > 1.0) || (time < 0.8 && time > 0.6) || (time < 0.4 && time > 0.2)) {

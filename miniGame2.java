@@ -54,7 +54,7 @@ public class miniGame2 implements ActionListener, KeyListener {
 		setupGame();
 	}
 
-	public void nextGameMode() {
+	public void nextGameMode(){
 		game.totalTime += time*1.5;
 		game.totalExtraTime += time*1.5;
 		time = TIMECONSTANT;
@@ -79,7 +79,7 @@ public class miniGame2 implements ActionListener, KeyListener {
 		timer.stop();
 	}
 	
-	public void keyPressed(KeyEvent e) {
+	public void keyPressed(KeyEvent e){
 		if(!game.timerStarted && game.firstMode) {
 			timer.start();
 			game.timerStarted = true;
@@ -119,7 +119,7 @@ public class miniGame2 implements ActionListener, KeyListener {
 
     }
 
-	public void timerOver() {
+	public void timerOver() throws IOException {
 		game.lives--;
 		frame.livesLabel.setText("Lives remaining: " + String.valueOf(game.lives));
 		if(!dead()) {
@@ -151,7 +151,11 @@ public class miniGame2 implements ActionListener, KeyListener {
 	            	frame.timeLeft.setText("Time's up!");
 	            	frame.totalTimeLabel.setText("Total time: " + df.format(game.totalTime));
 	                timer.stop();
+	                try{
 	                timerOver();
+	                } catch(IOException e1) {
+	                	e1.printStackTrace();
+	                }
 	            }
 	        }
         }
