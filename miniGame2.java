@@ -29,7 +29,7 @@ public class miniGame2 implements ActionListener, KeyListener {
 
 	//mini game - 2 
 	public final String texts[] = {"3.1415926535897", "this is written in java.", "this game is user friendly",
-									"abcdefghijklm", "nopqrstuvwxyz", "nu är det jul igen", "kommunikation och användargränssnitt"};
+									"abcdefghijklm", "nopqrstuvwxyz", "now it's christmas again"};
 	public final int TEXTSLENGTH = texts.length;
 	public int textChosen, countChar = 0;
 	public JLabel field;
