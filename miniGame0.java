@@ -28,7 +28,7 @@ public class miniGame0 implements ActionListener, KeyListener {
 	private final Color RED = new Color(245, 0, 0);
 
 	//mini game - 0
-	private final String ALPHABET = "ABCDEFGHIJKLMNPQRSTUVWXYZ123456789"; //no O or 0
+	private final String ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; //no numbers
 	private final int ALPHABETLENGTH = ALPHABET.length();
 	private int countRows = 0, countColumns = 0;
 	
@@ -64,8 +64,18 @@ public class miniGame0 implements ActionListener, KeyListener {
 	}
 
 	public void setupGame() {
-		rows = (int) Math.round(Math.random() * 2 + 2);
-		columns = (int) Math.round(Math.random() * 0.70 + 3);
+		if(game.totalTime <= 80) {
+			rows = (int) Math.round(Math.random() * 2 + 2);
+			columns = (int) Math.round(Math.random() * 0.60 + 3);
+		}
+		else if(game.totalTime <= 160) {
+			rows = (int) Math.round(Math.random() * 2 + 2);
+			columns = (int) Math.round(Math.random() * 0.80 + 3);
+		}
+		else {
+			rows = (int) Math.round(Math.random() * 1 + 3);
+			columns = (int) Math.round(Math.random() * 1.1 + 3);
+		}
 		fillGrid();
 		initSlots();
 		createGrid();
@@ -76,6 +86,7 @@ public class miniGame0 implements ActionListener, KeyListener {
 		for(int j = 0; j < columns; j++){		
 			for(int i = 0; i < rows; i++){
 				slots [i] [j].setBackground(backGround);
+				theGrid[i][j] = "";
 			}
 		}
 		frame.pnlGrid.removeAll();

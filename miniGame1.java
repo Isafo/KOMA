@@ -28,7 +28,7 @@ public class miniGame1 implements ActionListener, KeyListener {
 	private final Color RED = new Color(245, 0, 0);
 	
 	//mini game - 1
-	public final String ALPHABETQWOP = "WOOOP"; //no O or 0
+	public final String ALPHABETQWOP = "WWOOOOPP"; //no O or 0
 	public final int ALPHABETQWOPLENGTH = ALPHABETQWOP.length();
 	public int countRows = 0, countColumns = 0;
 	
