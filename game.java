@@ -22,8 +22,10 @@ public class game implements ActionListener, KeyListener{
 	public static miniGame0 game0;
 	public static miniGame1 game1;
 	public static miniGame2 game2;
+	private static highscore high;
 	
 	public game() throws IOException {
+		high = new highscore();
 		frame.playerNameLabel.setText(menu.getPlayerName());
 		frame.playerNameLabel.setFont(new Font("SanSerif", Font.PLAIN, FONTSIZE));
 		frame.livesLabel.setFont(new Font("SanSerif", Font.PLAIN, FONTSIZE));
@@ -90,8 +92,8 @@ public class game implements ActionListener, KeyListener{
 		}
 	}
 
-	public void saveScore() {
-		highscore.sort(menu.getPlayerName(), totalTime); //sparar score
+	public static void saveScore() throws IOException {
+		high.sort(menu.getPlayerName(), totalTime); //sparar score
 	}
 	
 	public void keyPressed(KeyEvent e) {
