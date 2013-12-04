@@ -9,9 +9,8 @@ import javax.swing.*;
 
 public class Player extends JPanel {
 
-	//movestuff
 	double xCord = 0, yCord = 0;
-	static double vely = 0, velx = 0;
+	static int vely = 0, velx = 0;
 	static int width, height, x, y;
 	
 	public Player(int x, int y){
@@ -21,8 +20,8 @@ public class Player extends JPanel {
 		setFocusable(true);
 		setFocusTraversalKeysEnabled(false);
 		
-		width = 20;
-		height = 20;
+		width = 25;
+		height = 25;
 	}
 	
 	public void draw(Graphics g){
@@ -33,26 +32,26 @@ public class Player extends JPanel {
 	//movefunctions
 	
 	public static void up(){
-		vely = -3.5;
+		vely = -4;
 		velx = 0;
 		setPosition();
 	}
 	
 	public static void down(){
-		vely = 3.5;
+		vely = 4;
 		velx = 0;
 		setPosition();
 	}
 	
 	public static void left(){
 		vely = 0;
-		velx = -3.5;
+		velx = -4;
 		setPosition();
 	}
 	
 	public static void right(){
 		vely = 0;
-		velx = 3.5;
+		velx = 4;
 		setPosition();
 	}
 

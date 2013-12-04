@@ -6,6 +6,7 @@ public class Field {
 
 	static ArrayList<Wall> walls;
 	ArrayList<Player> players;
+	Ending end;
 	String filePath;
 	private static int howMany;
 	int xWall, yWall;
@@ -17,14 +18,14 @@ public class Field {
 		filePath = path;
 		
 		try {
-			createWalls();
+			createField();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
-	public void createWalls() throws IOException{
+	public void createField() throws IOException{
 		
 		ArrayList<String> lines = new ArrayList<String>();
 		
@@ -53,6 +54,11 @@ public class Field {
 				
 				case 'P': // add a player
 					players.add(new Player(j * 30 + 3, i * 30));
+					break;
+				
+				case 'E':
+					System.out.println("end found");
+					end = new Ending(j * 30 + 3, i * 30);
 					break;
 				}
 			}
