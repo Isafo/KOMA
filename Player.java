@@ -65,7 +65,6 @@ public class Player extends JPanel {
 		//reset position if collision was detected
 		x -= velx;
 		y -= vely;
-		System.out.println(x + "  " + y + "resert");
 	}
 	
 	public static Rectangle getPlayer(){

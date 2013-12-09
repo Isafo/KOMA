@@ -10,10 +10,13 @@ public class Maze extends JFrame {
 	Field map;
 	Header header;
 	public String filePath;
+	boolean won = false;
+	
+	JFrame frame;
 	
 	public Maze() throws IOException {
 
-		JFrame frame = new JFrame("Maze");
+		frame = new JFrame("Maze");
 
 		randomMap();
 		
@@ -155,12 +158,20 @@ public class Maze extends JFrame {
             Rectangle wall = new Rectangle(b.x, b.y, b.width, b.height);
 
 			if(player.intersects(wall)){
-				System.out.println("collision");
            	    return false;
            	}
 			
 			else if(player.intersects(end)){
-				System.out.println("end");
+				if(won == false){
+					try {
+						frame.dispose();
+						Game.next();
+						won = true;
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}			
+				}
 			}
 		}
         return true;

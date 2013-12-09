@@ -13,8 +13,6 @@ public class Ending extends JPanel{
 	public Ending(int x, int y){
 		this.x = x;
 		this.y = y;
-		
-		System.out.println("in ending");
 	}
 	
 	public static Rectangle getEnding(){

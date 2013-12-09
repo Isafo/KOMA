@@ -57,7 +57,6 @@ public class Field {
 					break;
 				
 				case 'E':
-					System.out.println("end found");
 					end = new Ending(j * 30 + 3, i * 30);
 					break;
 				}

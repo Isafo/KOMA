@@ -71,11 +71,7 @@ public class menu extends JFrame implements MouseListener{
         jLabel1 = new javax.swing.JLabel();
         disp = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        txtHighscore = new javax.swing.JTextArea(){
-            @Override public void setBorder(Border border) {
-                // No!
-            }
-        };
+        txtHighscore = new javax.swing.JTextArea();
 
         jMenu1.setText("jMenu1");
 
