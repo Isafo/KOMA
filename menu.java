@@ -1,4 +1,6 @@
 import javax.swing.*;
+import javax.swing.border.Border;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
@@ -69,7 +71,11 @@ public class menu extends JFrame implements MouseListener{
         jLabel1 = new javax.swing.JLabel();
         disp = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        txtHighscore = new javax.swing.JTextArea();
+        txtHighscore = new javax.swing.JTextArea(){
+            @Override public void setBorder(Border border) {
+                // No!
+            }
+        };
 
         jMenu1.setText("jMenu1");
 
@@ -144,11 +150,12 @@ public class menu extends JFrame implements MouseListener{
 
         txtHighscore.setEditable(false);
         txtHighscore.setBackground(new java.awt.Color(153, 153, 153));
-        txtHighscore.setColumns(10);
-        txtHighscore.setRows(7);
+        txtHighscore.setColumns(15);
+        txtHighscore.setRows(8);
         txtHighscore.setText("Highscore" + "\n");
         txtHighscore.setBorder(null);
         txtHighscore.setFocusable(false);
+        jScrollPane1.setBorder(null);
         jScrollPane1.setViewportView(txtHighscore);
 
         javax.swing.GroupLayout dispLayout = new javax.swing.GroupLayout(disp);
