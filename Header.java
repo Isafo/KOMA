@@ -14,16 +14,6 @@ public class Header extends javax.swing.JPanel {
     public Header() {
         initComponents();
     }
-
-    public static void setLives(){
-    	if(Game.lives == 2){
-    		life3.setVisible(false);
-    	}
-    	
-    	else if(Game.lives == 1){
-    		life2.setVisible(false);
-    	}
-    }
     
     public static void setTime(double t){
     	timeLabel.setText(df.format(t));
