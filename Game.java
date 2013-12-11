@@ -10,7 +10,7 @@ public class Game implements ActionListener, KeyListener{
         public static double totalTime = 0, totalExtraTime = 0;
         
         //player
-        public static int lives = 4;
+        public static int lives = 3;
         public static boolean timerStarted = false, firstMode = true;
 
         //Mini games
