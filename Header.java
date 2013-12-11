@@ -1,17 +1,35 @@
+import java.text.DecimalFormat;
+
 public class Header extends javax.swing.JPanel {
 
     // Variables declaration                    
     private javax.swing.JLabel dispTimeLabel;
     private javax.swing.JLabel life1;
-    private javax.swing.JLabel life2;
-    private javax.swing.JLabel life3;
-    private javax.swing.JLabel timeLabel;
+    private static javax.swing.JLabel life2;
+    private static javax.swing.JLabel life3;
+    private static javax.swing.JLabel timeLabel;
+    public static DecimalFormat df = new DecimalFormat("##.##");
     
 
     public Header() {
         initComponents();
     }
 
+    public static void setLives(){
+    	if(Game.lives == 2){
+    		life3.setVisible(false);
+    	}
+    	
+    	else if(Game.lives == 1){
+    		life2.setVisible(false);
+    	}
+    }
+    
+    public static void setTime(double t){
+    	timeLabel.setText(df.format(t));
+    }
+    
+    
     @SuppressWarnings("unchecked")                         
     private void initComponents() {
 
@@ -31,7 +49,7 @@ public class Header extends javax.swing.JPanel {
         dispTimeLabel.setText("Remaining time");
 
         timeLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        timeLabel.setText("10s");
+        timeLabel.setText("");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -64,5 +82,13 @@ public class Header extends javax.swing.JPanel {
                         .addComponent(life3)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+        
+        if(Game.lives < 3){
+        	life3.setVisible(false);
+        }
+        
+        if(Game.lives < 2){
+        	life2.setVisible(false);
+        }
     }                                           
 }

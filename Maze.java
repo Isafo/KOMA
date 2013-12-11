@@ -1,7 +1,9 @@
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 public class Maze extends JFrame {
@@ -9,10 +11,15 @@ public class Maze extends JFrame {
 	private Color background = new Color(35, 204, 80);
 	Field map;
 	Header header;
+	JFrame frame;
 	public String filePath;
 	boolean won = false;
-	
-	JFrame frame;
+
+	//timer declatarions
+    Timer timer;
+    public final double TIMECONSTANT = 8, TIMECONSTANTFIRST = TIMECONSTANT*2;
+    public double time = TIMECONSTANT; 
+    public DecimalFormat df = new DecimalFormat("##.##");
 	
 	public Maze() throws IOException {
 
@@ -21,6 +28,11 @@ public class Maze extends JFrame {
 		randomMap();
 		
 		map = new Field(filePath);
+		
+		//start timer
+        timer = new Timer(100, new CountdownTimerListener());
+        timer.start();
+		
 		header = new Header();
 
 
@@ -58,6 +70,10 @@ public class Maze extends JFrame {
 		frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
 
+		
+		/*
+		 * Keystroke
+		 */
 		
 		//Keystroke for moving blue circle up
 		KeyStroke upKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0, false);
@@ -148,7 +164,9 @@ public class Maze extends JFrame {
 		//return number;
 	}
 
-    //returns false if collision is detected
+    /*
+     * Collision detection
+     */
     public boolean checkCollision(){
    
         Rectangle player = Player.getPlayer();
@@ -175,6 +193,55 @@ public class Maze extends JFrame {
 			}
 		}
         return true;
+	}
+    
+    /*
+     * Timer
+     */
+    
+    public void timerOver() throws IOException {
+        Game.lives--;
+        if(!dead()) {
+        	frame.dispose();
+        	Header.setLives();
+            Game.next();
+        }
+        else{
+                //score visas, avslutas
+                System.out.println("Final score: " + df.format(Game.totalTime));
+                Game.saveScore();
+        }
+    }
+
+	public boolean dead() {
+	        if(Game.lives <= 0)
+	                return true;
+	        else
+	                return false;
+	}
+
+	class CountdownTimerListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+            if(!dead()){
+                if((time -= 0.1) > 0) {
+                    Game.totalTime += 0.1;
+                    Header.setTime(time);
+	            } 
+	            
+                else {
+	                timer.stop();
+	                try{
+		                timerOver();
+	                } catch(IOException e1) {
+                        e1.printStackTrace();
+	                }
+	            }
+	        }
+            
+            else{
+            	frame.dispose();
+            } 
+		}
 	}
 }
 
