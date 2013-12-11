@@ -1,12 +1,12 @@
 public class Between extends javax.swing.JPanel {
 
-    // Variables declaration - do not modify                     
+    // Variables declaration                   
     private javax.swing.JLabel bouns;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel minigameInfo;
     private javax.swing.JLabel nextMiniGame;
     private javax.swing.JLabel totalTime;
-    // End of variables declaration  
+    // End of variables declaration
 
 
     public Between() {

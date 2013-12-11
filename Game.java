@@ -33,7 +33,7 @@ public class Game implements ActionListener, KeyListener{
         public static void next() throws IOException {
                 while(currentGame == lastGame)
                         currentGame = random.nextInt(NUMBEROFGAMES);
-                
+                		
 //                game0 = null;
 //                game1 = null;
 //                game2 = null;

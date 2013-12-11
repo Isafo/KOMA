@@ -9,8 +9,11 @@ import java.awt.event.KeyEvent;
 public class Maze extends JFrame {
 
 	private Color background = new Color(35, 204, 80);
+	JPanel pane;
+	JPanel betw = new JPanel();
 	Field map;
 	Header header;
+	Between between;
 	JFrame frame;
 	public String filePath;
 	boolean won = false;
@@ -202,14 +205,20 @@ public class Maze extends JFrame {
     public void timerOver() throws IOException {
         Game.lives--;
         if(!dead()) {
+        	/*frame.remove(pane);
+        	frame.revalidate();
+        	frame.repaint();
+        	between = new Between();
+        	betw.add(between);
+        	frame.add(betw);*/
         	frame.dispose();
-        	Header.setLives();
             Game.next();
         }
         else{
-                //score visas, avslutas
-                System.out.println("Final score: " + df.format(Game.totalTime));
-                Game.saveScore();
+	        //score visas, avslutas
+	        System.out.println("Final score: " + df.format(Game.totalTime));
+	        Game.saveScore();
+	        frame.dispose();
         }
     }
 
@@ -236,11 +245,7 @@ public class Maze extends JFrame {
                         e1.printStackTrace();
 	                }
 	            }
-	        }
-            
-            else{
-            	frame.dispose();
-            } 
+	        } 
 		}
 	}
 }
