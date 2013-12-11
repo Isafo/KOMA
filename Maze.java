@@ -8,18 +8,25 @@ public class Maze extends JFrame {
 
 	private Color background = new Color(35, 204, 80);
 	Field map;
+	Header header;
 	public String filePath;
+	boolean won = false;
+	
+	JFrame frame;
 	
 	public Maze() throws IOException {
 
-		JFrame frame = new JFrame("test");
-	
+		frame = new JFrame("Maze");
+
 		randomMap();
 		
 		map = new Field(filePath);
+		header = new Header();
 
+
+		//panel for the game graphics
 		final JPanel pane = new JPanel(){
-			@Override		
+			@Override
 			public void paint(Graphics g){		
 
 				//background-color
@@ -38,8 +45,14 @@ public class Maze extends JFrame {
 			};
 		};
 
+		//panel for header
+		JPanel headerPane = new JPanel();
+
+		headerPane.add(header);
+
+		frame.add(header, BorderLayout.NORTH);
         frame.add(pane);
-        frame.setSize(467, 420);
+        frame.setSize(456, 450);
 		frame.setResizable(false);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -51,7 +64,10 @@ public class Maze extends JFrame {
 		Action upAction = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
 				Player.up();
-				pane.repaint();
+				if(checkCollision())
+					pane.repaint();
+				else
+					Player.resetPosition();
 			}
 		};
 
@@ -60,7 +76,10 @@ public class Maze extends JFrame {
 		Action downAction = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
 				Player.down();
-				pane.repaint();
+				if(checkCollision())
+					pane.repaint();
+				else
+					Player.resetPosition();
 			}
 		};
 
@@ -69,7 +88,10 @@ public class Maze extends JFrame {
 		Action leftAction = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
 				Player.left();
-				pane.repaint();
+				if(checkCollision())
+					pane.repaint();
+				else
+					Player.resetPosition();
 			}
 		};
 		
@@ -78,7 +100,10 @@ public class Maze extends JFrame {
 		Action rightAction = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
 				Player.right();
-				pane.repaint();
+				if(checkCollision())
+					pane.repaint();
+				else
+					Player.resetPosition();
 			}
 		};
 
@@ -121,6 +146,35 @@ public class Maze extends JFrame {
 		number = MIN + ((int) Math.random() * (MAX - MIN + 1));
 		
 		//return number;
+	}
+
+    //returns false if collision is detected
+    public boolean checkCollision(){
+   
+        Rectangle player = Player.getPlayer();
+        Rectangle end  = Ending.getEnding();
+
+        for(Wall b : map.getWalls()){
+            Rectangle wall = new Rectangle(b.x, b.y, b.width, b.height);
+
+			if(player.intersects(wall)){
+           	    return false;
+           	}
+			
+			else if(player.intersects(end)){
+				if(won == false){
+					try {
+						frame.dispose();
+						Game.next();
+						won = true;
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}			
+				}
+			}
+		}
+        return true;
 	}
 }
 

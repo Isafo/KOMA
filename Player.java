@@ -1,5 +1,7 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
+
 import javax.management.timer.Timer;
 import javax.swing.*;
 
@@ -7,10 +9,9 @@ import javax.swing.*;
 
 public class Player extends JPanel {
 
-	//movestuff
 	double xCord = 0, yCord = 0;
-	static double vely = 0, velx = 0;
-	int width, height, x, y;
+	static int vely = 0, velx = 0;
+	static int width, height, x, y;
 	
 	public Player(int x, int y){
 		this.x = x;
@@ -19,41 +20,54 @@ public class Player extends JPanel {
 		setFocusable(true);
 		setFocusTraversalKeysEnabled(false);
 		
-		width = 30;
-		height = 30;
+		width = 25;
+		height = 25;
 	}
 	
 	public void draw(Graphics g){
-		setPosition();
 		g.setColor(Color.BLUE);
-		g.fillOval(x, y, width, height);	
+		g.fillOval(x, y, width, height);
 	}
 	
 	//movefunctions
 	
 	public static void up(){
-		vely = -1.5;
+		vely = -4;
 		velx = 0;
+		setPosition();
 	}
 	
 	public static void down(){
-		vely = 1.5;
+		vely = 4;
 		velx = 0;
+		setPosition();
 	}
 	
 	public static void left(){
 		vely = 0;
-		velx = -1.5;
+		velx = -4;
+		setPosition();
 	}
 	
 	public static void right(){
 		vely = 0;
-		velx = 1.5;
+		velx = 4;
+		setPosition();
 	}
 
-	public void setPosition(){	
+	public static void setPosition(){	
 		//to get position if the blue circle has been movedby the user
 		x += velx;
 		y += vely;
 	}
+
+	public static void resetPosition(){	
+		//reset position if collision was detected
+		x -= velx;
+		y -= vely;
+	}
+	
+	public static Rectangle getPlayer(){
+		return new Rectangle (x, y, width, height);
+	}	
 }

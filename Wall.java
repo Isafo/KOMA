@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.awt.Rectangle;
 
 //Wall is added if symbol == #
 
@@ -20,5 +21,5 @@ public class Wall {
 		
 		g.setColor(Color.BLACK);
 		g.drawRoundRect(x, y, width, height, 1, 1);
-	}	
+	}
 }

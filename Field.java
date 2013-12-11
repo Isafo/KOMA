@@ -1,11 +1,15 @@
 import java.util.*;
+import java.awt.Rectangle;
 import java.io.*;
 
 public class Field {
 
-	ArrayList<Wall> walls;
+	static ArrayList<Wall> walls;
 	ArrayList<Player> players;
+	Ending end;
 	String filePath;
+	private static int howMany;
+	int xWall, yWall;
 	
 	public Field(String path){
 		walls = new ArrayList<Wall>();
@@ -14,14 +18,14 @@ public class Field {
 		filePath = path;
 		
 		try {
-			createWalls();
+			createField();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
-	public void createWalls() throws IOException{
+	public void createField() throws IOException{
 		
 		ArrayList<String> lines = new ArrayList<String>();
 		
@@ -51,13 +55,24 @@ public class Field {
 				case 'P': // add a player
 					players.add(new Player(j * 30 + 3, i * 30));
 					break;
+				
+				case 'E':
+					end = new Ending(j * 30 + 3, i * 30);
+					break;
 				}
 			}
 		}
+		
+		howMany = walls.size();
+		
 	}
 	
 	public ArrayList<Wall> getWalls(){
 		return walls;
+	}
+	
+	public static int getHowManyWalls(){
+		return howMany;
 	}
 	
 	public ArrayList<Player> getPlayers(){
