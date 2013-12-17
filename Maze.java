@@ -20,6 +20,7 @@ public class Maze extends JFrame {
     public final double TIMECONSTANT = 20, TIMECONSTANTFIRST = TIMECONSTANT*2;
     public double time = TIMECONSTANT; 
     public DecimalFormat df = new DecimalFormat("##.##");
+    JPanel pane = new JPanel();
 	
 	public Maze() throws IOException {
 
@@ -37,7 +38,7 @@ public class Maze extends JFrame {
 
 
 		//panel for the game graphics
-		final JPanel pane = new JPanel(){
+		pane = new JPanel(){
 			@Override
 			public void paint(Graphics g){		
 
@@ -221,7 +222,14 @@ public class Maze extends JFrame {
     public void timerOver() throws IOException {
         Game.lives--;
         if(!dead()) {
-        	frame.dispose();
+        	frame.remove(pane);
+        	frame.invalidate();
+            frame.validate();
+            
+            Between b = new Between();
+            frame.add(b);
+            
+        	//frame.dispose();
         	Header.setLives();
             Game.next();
         }
