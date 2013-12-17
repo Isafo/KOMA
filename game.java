@@ -51,7 +51,7 @@ public class game implements ActionListener, KeyListener{
 	}
 	
 	public static void next() {
-		System.out.println("next!");
+		//System.out.println("next!");
 		//gamesWithoutBonus++;
 		if(gamesWithoutBonus <= 3) {
 			while(currentGame == lastGame) {//Don't play the same gamemode twice in a row

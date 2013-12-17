@@ -42,11 +42,11 @@ public class miniGame2 implements ActionListener, KeyListener {
 	public static Random random = new Random();
 	
 	public miniGame2() throws IOException {
-		 frame.playerNameLabel.setText(menu.getPlayerName());
-		 frame.timeLeft.setText("Time: " + df.format(time));
-		 frame.livesLabel.setText("Lives: " + df.format(game.lives));
-		 frame.totalTimeLabel.setText("Total time: " + df.format(game.totalTime));
-		 frame.totalExtraTimeLabel.setText("Extra time: " + df.format(game.totalExtraTime));
+		frame.playerNameLabel.setText(menu.getPlayerName());
+		frame.timeLeft.setText("Time: " + df.format(time));
+		frame.livesLabel.setText("Lives: " + df.format(game.lives));
+		frame.totalTimeLabel.setText("Total time: " + df.format(game.totalTime));
+		frame.totalExtraTimeLabel.setText("Extra time: " + df.format(game.totalExtraTime));
 		
 		timer = new Timer(100, new CountdownTimerListener());
 		if(!game.firstMode) {
