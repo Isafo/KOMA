@@ -29,7 +29,7 @@ public class menu extends JFrame implements MouseListener{
 		//add highscores to textArea
  		openFile();
  		for(int i = 0;  i < 5; i++){
- 			//txtHighscore.append(i+1 + ". " + high.getNames(i) + " " + high.getScores(i) + "s\n");
+ 			txtHighscore.append(i+1 + ". " + high.getNames(i) + " " + high.getScores(i) + "s\n");
  		}
 
  		try {

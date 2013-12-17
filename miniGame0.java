@@ -177,6 +177,7 @@ public class miniGame0 implements ActionListener, KeyListener {
 	            	frame.timeLeft.setText("Time's up!");
 	            	frame.totalTimeLabel.setText("Total time: " + df.format(game.totalTime));
 	                timer.stop();
+
 	                try {
 						timerOver();
 					} catch (IOException e1) {

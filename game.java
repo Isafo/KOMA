@@ -15,13 +15,15 @@ public class game implements ActionListener, KeyListener{
 
 	//Mini games
 	public static int NUMBEROFGAMES = 3;
+	public static int gamesWithoutBonus = 0;
 	public int miniGames[] = new int[NUMBEROFGAMES];
 	public static int currentGame = 0;
-	public static int lastGame = 0;
+	public static int lastGame = 100;
 	public static Random random = new Random();
 	public static miniGame0 game0;
 	public static miniGame1 game1;
 	public static miniGame2 game2;
+	public static miniGame3 game3;
 	private static highscore high;
 	
 	public game() throws IOException {
@@ -49,44 +51,65 @@ public class game implements ActionListener, KeyListener{
 	}
 	
 	public static void next() {
-		while(currentGame == lastGame)
-			currentGame = random.nextInt(NUMBEROFGAMES);
+		System.out.println("next!");
+		//gamesWithoutBonus++;
+		if(gamesWithoutBonus <= 3) {
+			while(currentGame == lastGame) {//Don't play the same gamemode twice in a row
+				currentGame = random.nextInt(NUMBEROFGAMES);
+			}
+		}
 		
 		game0 = null;
 		game1 = null;
 		game2 = null;
+		game3 = null;
 
-		switch(currentGame) {
-		case 0:
+		if(gamesWithoutBonus <= 3) {
+			switch(currentGame) {
+			case 0:
+				try {
+					game0 = new miniGame0();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				lastGame = 0;
+				break;
+			case 1:
+				try {
+					game1 = new miniGame1();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				lastGame = 1;
+				break;
+			case 2:
+				try {
+					game2 = new miniGame2();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				lastGame = 2;
+				break;
+			}
+		}
+		else {
+			currentGame = 3;
 			try {
-				game0 = new miniGame0();
+				game3 = new miniGame3();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			lastGame = 0;
-			break;
-		case 1:
-			try {
-				game1 = new miniGame1();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			lastGame = 1;
-			break;
-		case 2:
-			try {
-				game2 = new miniGame2();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			lastGame = 2;
-			break;
+			lastGame = 3;
+			gamesWithoutBonus = 0;
 		}
 	}
 
 	public void runGame() {
 		try {
-			game0 = new miniGame0();
+			// game3 = new miniGame3();
+			// currentGame = 3;
+			game2 = new miniGame2();
+			currentGame = 2;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -106,6 +129,9 @@ public class game implements ActionListener, KeyListener{
 				break;
 			case 2:
 				game2.keyPressed(e);
+				break;
+			case 3:
+				game3.keyPressed(e);
 				break;
 		}
     }

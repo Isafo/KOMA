@@ -1,5 +1,7 @@
-Robin 128
-kalle 28
-Haxor 12
-morgan 7
-simon 1
+Robin               128                 
+yaaay               48.1                
+kalle               28                  
+Haxor               12                  
+Rob                 9.75                
+morgan              7                   
+simon               1                   
