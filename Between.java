@@ -1,3 +1,11 @@
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.text.DecimalFormat;
+import java.util.Random;
+
+import javax.swing.Timer;
+
 public class Between extends javax.swing.JPanel {
 
     // Variables declaration                   
@@ -8,9 +16,21 @@ public class Between extends javax.swing.JPanel {
     private javax.swing.JLabel totalTime;
     // End of variables declaration
 
-
+	//timer declatarions
+    Timer timer;
+    public double timeUntilNext = 7;
+    public final double TIMECONSTANT = 20, TIMECONSTANTFIRST = TIMECONSTANT*2;
+    public double time = TIMECONSTANT;
+    public static Random random = new Random();
+    public DecimalFormat df = new DecimalFormat("##.##");
+    
+    
     public Between() {
         initComponents();
+        
+        timer = new Timer(100, new CountdownTimerListener());
+        timer.start();
+        
     }
 
     @SuppressWarnings("unchecked")                        
@@ -26,17 +46,31 @@ public class Between extends javax.swing.JPanel {
 
         setPreferredSize(new java.awt.Dimension(456, 450));
 
-        nextMiniGame.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        nextMiniGame.setText("Next minigame:");
+        nextMiniGame.setFont(new java.awt.Font("Tahoma", 0, 14));
+        
+        //Maze minigame
+        if(Game.currentGame == 1){
+        	nextMiniGame.setText("Next minigame: Maze");
+        
+            minigameInfo.setFont(new java.awt.Font("Tahoma", 0, 12));
+            minigameInfo.setText("Find your way through the maze");
+        }
+        
+        //minigame0
+        if(Game.currentGame == 2){
+        	nextMiniGame.setText("Next minigame: minigame0");
+        
+            minigameInfo.setFont(new java.awt.Font("Tahoma", 0, 12));
+            minigameInfo.setText("Lorem ipsum");
+        }
+        
 
-        minigameInfo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        minigameInfo.setText("Lorem ipsum");
 
-        totalTime.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        totalTime.setText("Total time played:");
+        totalTime.setFont(new java.awt.Font("Tahoma", 0, 14));
+        totalTime.setText("Total time played:" + df.format(Game.totalTime));
 
-        bouns.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        bouns.setText("Bonus points:");
+        bouns.setFont(new java.awt.Font("Tahoma", 0, 14)); 
+        bouns.setText("time until next gamemode:" + df.format(timeUntilNext));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -71,5 +105,40 @@ public class Between extends javax.swing.JPanel {
                 .addComponent(bouns)
                 .addGap(57, 57, 57))
         );
-    }                                        
+    }
+    
+    /*
+     * Timer
+     */
+
+	public boolean dead() {
+	        if(Game.lives <= 0)
+	                return true;
+	        else
+	                return false;
+	}
+	
+    public void timerOver() throws IOException {
+    	Maze.frame.dispose();
+    	Header.setLives();
+        Game.next();
+    }
+	
+
+	class CountdownTimerListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			if((timeUntilNext -= 0.1) > 0) {
+				bouns.setText("time until next gamemode:" + df.format(timeUntilNext));
+            }
+			
+			else{
+				timer.stop();
+				try{
+	                timerOver();
+                } catch(IOException e1) {
+                    e1.printStackTrace();
+                }
+			}
+		}
+	}
 }
