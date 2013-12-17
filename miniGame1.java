@@ -30,7 +30,7 @@ public class miniGame1 implements ActionListener, KeyListener {
 	private final Color YELLOW = new Color(245, 245, 0);
 	private final Color RED = new Color(245, 0, 0);
 	
-	//mini game - 1
+	//mini Game - 1
 	public final String ALPHABETQWOP = "WOOOP"; //no O or 0
 	public final String ALPHABETQWOPHARD = "WWOOOPP";
 	public final int ALPHABETQWOPLENGTH = ALPHABETQWOP.length();
@@ -38,14 +38,9 @@ public class miniGame1 implements ActionListener, KeyListener {
 	public int countRows = 0, countColumns = 0;
 	
 	public miniGame1() throws IOException {
-		 frame.playerNameLabel.setText(menu.getPlayerName());
-		 frame.timeLeft.setText("Time: " + df.format(time));
-		 frame.livesLabel.setText("Lives: " + df.format(game.lives));
-		 frame.totalTimeLabel.setText("Total time: " + df.format(game.totalTime));
-		 frame.totalExtraTimeLabel.setText("Extra time: " + df.format(game.totalExtraTime));
 		
 		timer = new Timer(100, new CountdownTimerListener());
-		if(!game.firstMode) {
+		if(!Game.firstMode) {
 			timer.start();
 		}
 		else
@@ -55,17 +50,13 @@ public class miniGame1 implements ActionListener, KeyListener {
 	}
 
 	public void nextGameMode() {
-		game.totalTime += time*1.5;
-		game.totalExtraTime += time*1.5;
+		Game.totalTime += time*1.5;
+		Game.totalExtraTime += time*1.5;
 		time = TIMECONSTANT;
 		timer.restart();
-		frame.livesLabel.setText("Lives: " + String.valueOf(game.lives));
-		frame.timeLeft.setText("Time: " + df.format(time));
-		frame.totalTimeLabel.setText("Total time: " + df.format(game.totalTime));
-		frame.totalExtraTimeLabel.setText("Extra time: " + df.format(game.totalExtraTime));
 
 		clearMode();
-		game.next();
+		Game.next();
 	}
 
 	public void setupGame() {
@@ -89,10 +80,10 @@ public class miniGame1 implements ActionListener, KeyListener {
 	}
 	
 	public void keyPressed(KeyEvent e) {
-		if(!game.timerStarted && game.firstMode) {
+		if(!Game.timerStarted && Game.firstMode) {
 			timer.start();
-			game.timerStarted = true;
-			game.firstMode = false;
+			Game.timerStarted = true;
+			Game.firstMode = false;
 		}
 		if(dead())
 			return;
@@ -132,20 +123,20 @@ public class miniGame1 implements ActionListener, KeyListener {
     }
 
 	public void timerOver() throws IOException {
-		game.lives--;
-		frame.livesLabel.setText("Lives remaining: " + String.valueOf(game.lives));
+		Game.lives--;
+		Header.setLives();
 		if(!dead()) {
 			nextGameMode();
 		}
 		else {
 			//score visas, avslutas
-			System.out.println("Final score: " + df.format(game.totalTime));
-			game.saveScore();
+			System.out.println("Final score: " + df.format(Game.totalTime));
+			Game.saveScore();
 		}
 	}
 
 	public boolean dead() {
-		if(game.lives <= 0)
+		if(Game.lives <= 0)
 			return true;
 		else
 			return false;
@@ -155,13 +146,10 @@ public class miniGame1 implements ActionListener, KeyListener {
         public void actionPerformed(ActionEvent e) {
 			if(!dead()) {
 				if((time -= 0.1) > 0) {
-					game.totalTime += 0.1;
-					frame.timeLeft.setText("Time: " + df.format(time));
-					frame.totalTimeLabel.setText("Total time: " + df.format(game.totalTime));
+					Header.setTime(time);
+					Game.totalTime += 0.1;
 	            } 
 	            else {
-	            	frame.timeLeft.setText("Time's up!");
-	            	frame.totalTimeLabel.setText("Total time: " + df.format(game.totalTime));
 	                timer.stop();
 
 	                try {
@@ -195,7 +183,7 @@ public class miniGame1 implements ActionListener, KeyListener {
 	}
 
 	public void fillGrid() {
-		if(game.totalTime <= 80) {
+		if(Game.totalTime <= 80) {
 			for(int i = 0; i < rows; i++) {
 				for(int j = 0; j < columns; j++) {
 					char letter = ALPHABETQWOP.charAt((int) Math.round(Math.random()*(ALPHABETQWOPLENGTH-1)));

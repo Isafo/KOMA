@@ -14,12 +14,9 @@ public class person
 		name = theName;
 	}
 
-	
 	public void setSeconds(double theSeconds){
 		seconds = theSeconds;
 	}
-	
-
 	
 	//get the name on the person
 	public String getName(){

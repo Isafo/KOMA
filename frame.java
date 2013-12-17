@@ -17,46 +17,23 @@ import java.io.*;
 public class frame extends JFrame 
 	implements ActionListener, KeyListener{
 	// header & labels
-	public static JLabel head, timeLeft, playerNameLabel, livesLabel, totalTimeLabel, totalExtraTimeLabel;
 	public final int FONTSIZE = 15;
-	public static JPanel pnlGrid, pnlHead;
+	public static JPanel pnlGrid;
 	public static Container c;
+	public static Header header;
 	
-	game theGame;
+	Game theGame;
 		
 	public frame() throws IOException {
-		pnlHead = new JPanel();
 		pnlGrid = new JPanel();
-		
-		FlowLayout flow = new FlowLayout();
-		pnlHead.setLayout(flow);
-		pnlHead.setPreferredSize(new Dimension(40, 40));
-
-		playerNameLabel = new JLabel();
-		livesLabel = new JLabel();
-		timeLeft = new JLabel();
-		totalTimeLabel = new JLabel();
-		totalExtraTimeLabel = new JLabel();
-
-		playerNameLabel.setText(menu.getPlayerName());
-		playerNameLabel.setFont(new Font("SanSerif", Font.PLAIN, FONTSIZE));
-		timeLeft.setFont(new Font("SanSerif", Font.PLAIN, FONTSIZE));
-		livesLabel.setFont(new Font("SanSerif", Font.PLAIN, FONTSIZE));
-		totalTimeLabel.setFont(new Font("SanSerif", Font.PLAIN, FONTSIZE));
-		totalExtraTimeLabel.setFont(new Font("SanSerif", Font.PLAIN, FONTSIZE));
-
-		pnlHead.add(playerNameLabel);
-		pnlHead.add(timeLeft);
-		pnlHead.add(livesLabel);
-		pnlHead.add(totalTimeLabel);
-		pnlHead.add(totalExtraTimeLabel);
+		header = new Header();
 
 		addKeyListener(this);
 		
 		//Container		
     	c = getContentPane();
         c.setLayout(new BorderLayout());
-        c.add(pnlHead, BorderLayout.NORTH);
+        c.add(header, BorderLayout.NORTH);
         c.add(pnlGrid, BorderLayout.CENTER); 
 		
 		pack();
@@ -67,19 +44,19 @@ public class frame extends JFrame
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-		game();	
+		Game();	
 	}
 
-	public void game() {
+	public void Game() {
 		try {
-			theGame = new game();
+			theGame = new Game();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
 	public void keyPressed(KeyEvent arg0) {
-		// theGame.game0.keyPressed(arg0);
+
 	}
 
 	public void keyReleased(KeyEvent arg0) {
