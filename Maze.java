@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.util.Random;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -11,15 +12,17 @@ public class Maze extends JFrame {
 	private Color background = new Color(35, 204, 80);
 	Field map;
 	Header header;
-	JFrame frame;
+	static JFrame frame;
 	public String filePath;
 	boolean won = false;
 
 	//timer declatarions
     Timer timer;
     public final double TIMECONSTANT = 20, TIMECONSTANTFIRST = TIMECONSTANT*2;
-    public double time = TIMECONSTANT; 
+    public double time = TIMECONSTANT;
+    public static Random random = new Random();
     public DecimalFormat df = new DecimalFormat("##.##");
+    JPanel pane = new JPanel();
 	
 	public Maze() throws IOException {
 
@@ -37,7 +40,7 @@ public class Maze extends JFrame {
 
 
 		//panel for the game graphics
-		final JPanel pane = new JPanel(){
+		pane = new JPanel(){
 			@Override
 			public void paint(Graphics g){		
 
@@ -221,9 +224,20 @@ public class Maze extends JFrame {
     public void timerOver() throws IOException {
         Game.lives--;
         if(!dead()) {
-        	frame.dispose();
-        	Header.setLives();
-            Game.next();
+        	frame.remove(pane);
+        	frame.invalidate();
+            frame.validate();
+            
+            //choose next minigame
+            Game.currentGame = random.nextInt(Game.NUMBEROFGAMES);
+            Game.currentGame = 1; // until other minigames are added
+            Between b = new Between();
+            frame.add(b);
+            
+        	//frame.dispose();
+//        	Header.setLives();
+//			
+//            Game.next();
         }
         else{
                 //score visas, avslutas
