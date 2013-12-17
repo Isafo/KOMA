@@ -77,6 +77,7 @@ public class Maze extends JFrame {
 		
 		//Keystroke for moving blue circle up
 		KeyStroke upKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0, false);
+		KeyStroke wKeyStroke = KeyStroke.getKeyStroke('w');
 		Action upAction = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
 				Player.up();
@@ -89,6 +90,7 @@ public class Maze extends JFrame {
 
 		//Keystroke for moving blue circle down
 		KeyStroke downKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0, false);
+		KeyStroke sKeyStroke = KeyStroke.getKeyStroke('s');
 		Action downAction = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
 				Player.down();
@@ -101,6 +103,7 @@ public class Maze extends JFrame {
 
 		//Keystroke for moving blue circle left
 		KeyStroke leftKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0, false);
+		KeyStroke aKeyStroke = KeyStroke.getKeyStroke('a');
 		Action leftAction = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
 				Player.left();
@@ -113,6 +116,7 @@ public class Maze extends JFrame {
 		
 		//Keystroke for moving blue circle right
 		KeyStroke rightKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0, false);
+		KeyStroke dKeyStroke = KeyStroke.getKeyStroke('d');
 		Action rightAction = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
 				Player.right();
@@ -123,13 +127,28 @@ public class Maze extends JFrame {
 			}
 		};
 
+		//Up
 		frame.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(upKeyStroke, "UP");
 		frame.getRootPane().getActionMap().put("UP", upAction);
+		frame.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(wKeyStroke, "UP");
+		frame.getRootPane().getActionMap().put("UP", upAction);
+		
+		//Down
 		frame.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(downKeyStroke, "DOWN");
 		frame.getRootPane().getActionMap().put("DOWN", downAction);
+		frame.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(sKeyStroke, "DOWN");
+		frame.getRootPane().getActionMap().put("DOWN", downAction);
+		
+		//left
 		frame.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(leftKeyStroke, "LEFT");
 		frame.getRootPane().getActionMap().put("LEFT", leftAction);
+		frame.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(aKeyStroke, "LEFT");
+		frame.getRootPane().getActionMap().put("LEFT", leftAction);
+		
+		//right
 		frame.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(rightKeyStroke, "RIGHT");
+		frame.getRootPane().getActionMap().put("RIGHT", rightAction);
+		frame.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(dKeyStroke, "RIGHT");
 		frame.getRootPane().getActionMap().put("RIGHT", rightAction);
 	}
 	
