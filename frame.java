@@ -20,6 +20,7 @@ public class frame extends JFrame
 	public static JLabel head, timeLeft, playerNameLabel, livesLabel, totalTimeLabel, totalExtraTimeLabel;
 	public final int FONTSIZE = 15;
 	public static JPanel pnlGrid, pnlHead;
+	public static Container c;
 	
 	game theGame;
 		
@@ -53,7 +54,7 @@ public class frame extends JFrame
 		addKeyListener(this);
 		
 		//Container		
-    	Container c = getContentPane();
+    	c = getContentPane();
         c.setLayout(new BorderLayout());
         c.add(pnlHead, BorderLayout.NORTH);
         c.add(pnlGrid, BorderLayout.CENTER); 

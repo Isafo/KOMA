@@ -10,10 +10,10 @@ import java.text.DecimalFormat;
 import java.io.*;
 import java.util.Random;
 
-public class miniGame2 implements ActionListener, KeyListener {
+public class miniGame3 implements ActionListener, KeyListener {
 	//timer
 	Timer timer;
-	public final double TIMECONSTANT = 7, TIMECONSTANTFIRST = TIMECONSTANT*2; //now doubles ---
+	public final double TIMECONSTANT = 30, TIMECONSTANTFIRST = 40; //now doubles ---
 	public double time = TIMECONSTANT; 
 	public DecimalFormat df = new DecimalFormat("##.##");
 
@@ -29,24 +29,26 @@ public class miniGame2 implements ActionListener, KeyListener {
 	private final Color YELLOW = new Color(245, 245, 0);
 	private final Color RED = new Color(245, 0, 0);
 
-	//mini game - 2 
-	public final String texts[] = {"this is written in java.", "this game is user friendly", "lose a life if timer runs out"};
-	public final String textsHard[] = {"3.1415926535897", "abcdefghijklmnopqr", "jklmnopqrstuvwxyz", "now it's christmas again"};
+	//mini game - 3
+	public final String texts[] = {"this is a bonus mini game", "math is not as fun as programming", "koma isn't the same thing as coma",
+				"complete all rows for a bonus life", "this is a good way to do instructions", "game modes become harder with time"};
 	public final int TEXTSLENGTH = texts.length;
-	public final int TEXTSHARDLENGTH = textsHard.length;
-	public int textChosen = 0, countChar = 0;
+	public int countChar = 0, countRows = 0;
+	public int[] textChosen = new int[TEXTSLENGTH];
 	public JLabel field;
 	public StyledDocument styleDoc = new DefaultStyledDocument();
-	public JTextPane textPane = new JTextPane(styleDoc);
+	public JTextPane[] textPane = new JTextPane[TEXTSLENGTH]; //(styleDoc)
+	public JTextPane textPane0 = new JTextPane(styleDoc);
+	public JTextPane textPane1 = new JTextPane(styleDoc);
 	public SimpleAttributeSet attributeSet = new SimpleAttributeSet();
 	public static Random random = new Random();
 	
-	public miniGame2() throws IOException {
-		 frame.playerNameLabel.setText(menu.getPlayerName());
-		 frame.timeLeft.setText("Time: " + df.format(time));
-		 frame.livesLabel.setText("Lives: " + df.format(game.lives));
-		 frame.totalTimeLabel.setText("Total time: " + df.format(game.totalTime));
-		 frame.totalExtraTimeLabel.setText("Extra time: " + df.format(game.totalExtraTime));
+	public miniGame3() throws IOException {
+		frame.playerNameLabel.setText(menu.getPlayerName());
+		frame.timeLeft.setText("Time: " + df.format(time));
+		frame.livesLabel.setText("Lives: " + df.format(game.lives));
+		frame.totalTimeLabel.setText("Total time: " + df.format(game.totalTime));
+		frame.totalExtraTimeLabel.setText("Extra time: " + df.format(game.totalExtraTime));
 		
 		timer = new Timer(100, new CountdownTimerListener());
 		if(!game.firstMode) {
@@ -78,7 +80,7 @@ public class miniGame2 implements ActionListener, KeyListener {
 
 	public void clearMode() {
 		countChar = 0;
-		textPane.setText("");
+		//textPane.setText("");
 		frame.pnlGrid.removeAll();
 		timer.stop();
 	}
@@ -93,49 +95,30 @@ public class miniGame2 implements ActionListener, KeyListener {
 			return;
 		
 		char c = e.getKeyChar();
-		if(game.totalTime <= 80) {
-			if(c == texts[textChosen].charAt(countChar)) {
-				StyleConstants.setForeground(attributeSet, GREEN);
-				styleDoc.setCharacterAttributes(countChar, 1, attributeSet, true);
+		if(c == texts[textChosen[countRows]].charAt(countChar)) {
+			StyleConstants.setForeground(attributeSet, GREEN);
+			styleDoc.setCharacterAttributes(countChar, 1, attributeSet, true);
 
-				countChar++;
-				if(countChar >= texts[textChosen].length()) {
-					countChar = 0;
+			countChar++;
+			if(countChar >= texts[textChosen[countRows]].length()) {
+				countChar = 0;
+				countRows++;
+				System.out.println(countRows);
+				if(countRows >= 4) {
+					game.lives++; //win a life
 					nextGameMode();
 				}
+			}
 
-				StyleConstants.setForeground(attributeSet, YELLOW);
-				StyleConstants.setUnderline(attributeSet, true);
-				styleDoc.setCharacterAttributes(countChar, 1, attributeSet, true);
-			}
-			else {
-				if(countChar != 0)
-					time -= 0.1;
-				StyleConstants.setForeground(attributeSet, RED);
-				styleDoc.setCharacterAttributes(countChar, 1, attributeSet, true);
-			}
+			StyleConstants.setForeground(attributeSet, YELLOW);
+			StyleConstants.setUnderline(attributeSet, true);
+			styleDoc.setCharacterAttributes(countChar, 1, attributeSet, true);
 		}
 		else {
-			if(c == textsHard[textChosen].charAt(countChar)) {
-				StyleConstants.setForeground(attributeSet, GREEN);
-				styleDoc.setCharacterAttributes(countChar, 1, attributeSet, true);
-
-				countChar++;
-				if(countChar >= textsHard[textChosen].length()) {
-					countChar = 0;
-					nextGameMode();
-				}
-
-				StyleConstants.setForeground(attributeSet, YELLOW);
-				StyleConstants.setUnderline(attributeSet, true);
-				styleDoc.setCharacterAttributes(countChar, 1, attributeSet, true);
-			}
-			else {
-				if(countChar != 0)
-					time -= 0.1;
-				StyleConstants.setForeground(attributeSet, RED);
-				styleDoc.setCharacterAttributes(countChar, 1, attributeSet, true);
-			}
+			if(countChar != 0)
+				time -= 0.1;
+			StyleConstants.setForeground(attributeSet, RED);
+			styleDoc.setCharacterAttributes(countChar, 1, attributeSet, true);
 		}
     }
 
@@ -204,31 +187,40 @@ public class miniGame2 implements ActionListener, KeyListener {
 	}
 
 	public JPanel createField() {
-		if(game.totalTime <= 80) {
-			System.out.println("game.totalTime = " + game.totalTime);
-			textChosen = random.nextInt(TEXTSLENGTH);
-			textPane.setText(texts[textChosen]);
-		}
-		else {
-			textChosen = random.nextInt(TEXTSHARDLENGTH);
-			textPane.setText(textsHard[textChosen]);
+		frame.pnlGrid.removeAll();
+		frame.pnlGrid = new JPanel();
+		for(int i = 0; i < TEXTSLENGTH-2; i++) {
+			textChosen[i] = random.nextInt(TEXTSLENGTH);
+			texts[textChosen[i]].toUpperCase();
+			System.out.println(texts[textChosen[i]]);
+			textPane[i] = new JTextPane(styleDoc);
+			textPane[i].setEditable(false);
+			textPane[i].setText(texts[textChosen[i]]);
+			textPane[i].setFont(new Font("SanSerif", Font.PLAIN, 30));
+			textPane[i].addKeyListener(this);
+			textPane[i].setFocusable(true);
+			frame.pnlGrid.add(textPane[i]);
 		}
 
-		textPane.setFont(new Font("SanSerif", Font.PLAIN, 35));
-		textPane.setEditable(false);
-		textPane.addKeyListener(this);
-		textPane.setFocusable(true);
-		texts[textChosen].toUpperCase();
+		// textPane0.setEditable(false);
+		// textPane0.setText(texts[textChosen[0]]);
+		// textPane0.setFont(new Font("SanSerif", Font.PLAIN, 30));
+		// textPane0.addKeyListener(this);
+		// textPane0.setFocusable(true);
+		// textPane1.setEditable(false);
+		// textPane1.setText(texts[textChosen[1]]);
+		// textPane1.setFont(new Font("SanSerif", Font.PLAIN, 30));
+		// textPane1.addKeyListener(this);
+		// textPane1.setFocusable(true);
 
 		StyleConstants.setForeground(attributeSet, YELLOW);
 		StyleConstants.setUnderline(attributeSet, true);
 
 		styleDoc.setCharacterAttributes(0, 1, attributeSet, true);
 
-		frame.pnlGrid.removeAll();
-		frame.pnlGrid = new JPanel();
+		// frame.pnlGrid.add(textPane0);
+		// frame.pnlGrid.add(textPane1);
 		frame.c.add(frame.pnlGrid, BorderLayout.CENTER);
-		frame.pnlGrid.add(textPane);
 
 		return frame.pnlGrid;
 	}

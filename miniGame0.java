@@ -1,7 +1,10 @@
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.*;
+
 import javax.swing.border.LineBorder;
+
 import java.text.DecimalFormat;
 import java.io.*;
 
@@ -65,16 +68,20 @@ public class miniGame0 implements ActionListener, KeyListener {
 
 	public void setupGame() {
 		if(game.totalTime <= 80) {
-			rows = (int) Math.round(Math.random() * 2 + 2);
-			columns = (int) Math.round(Math.random() * 0.60 + 3);
+			rows = 2;
+			columns = 3;
 		}
 		else if(game.totalTime <= 160) {
 			rows = (int) Math.round(Math.random() * 2 + 2);
 			columns = (int) Math.round(Math.random() * 0.80 + 3);
 		}
-		else {
-			rows = (int) Math.round(Math.random() * 1 + 3);
+		else if(game.totalTime <= 220){
+			rows = 4;
 			columns = (int) Math.round(Math.random() * 1.1 + 3);
+		}
+		else {
+			rows = 5;
+			columns = 4;
 		}
 		fillGrid();
 		initSlots();
@@ -138,7 +145,7 @@ public class miniGame0 implements ActionListener, KeyListener {
 
     }
 
-	public void timerOver() {
+	public void timerOver() throws IOException {
 		game.lives--;
 		frame.livesLabel.setText("Lives remaining: " + String.valueOf(game.lives));
 		if(!dead()) {
@@ -170,7 +177,11 @@ public class miniGame0 implements ActionListener, KeyListener {
 	            	frame.timeLeft.setText("Time's up!");
 	            	frame.totalTimeLabel.setText("Total time: " + df.format(game.totalTime));
 	                timer.stop();
-	                timerOver();
+	                try {
+						timerOver();
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
 	            }
 	            if(time < 1) {
 	            	if((time < 1.6 && time > 1.4) || (time < 1.2 && time > 1.0) || (time < 0.8 && time > 0.6) || (time < 0.4 && time > 0.2)) {

@@ -1,7 +1,10 @@
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.*;
+
 import javax.swing.border.LineBorder;
+
 import java.text.DecimalFormat;
 import java.io.*;
 
@@ -28,8 +31,10 @@ public class miniGame1 implements ActionListener, KeyListener {
 	private final Color RED = new Color(245, 0, 0);
 	
 	//mini game - 1
-	public final String ALPHABETQWOP = "WWOOOOPP"; //no O or 0
+	public final String ALPHABETQWOP = "WOOOP"; //no O or 0
+	public final String ALPHABETQWOPHARD = "WWOOOPP";
 	public final int ALPHABETQWOPLENGTH = ALPHABETQWOP.length();
+	public final int ALPHABETQWOPHARDLENGTH = ALPHABETQWOPHARD.length();
 	public int countRows = 0, countColumns = 0;
 	
 	public miniGame1() throws IOException {
@@ -126,7 +131,7 @@ public class miniGame1 implements ActionListener, KeyListener {
 
     }
 
-	public void timerOver() {
+	public void timerOver() throws IOException {
 		game.lives--;
 		frame.livesLabel.setText("Lives remaining: " + String.valueOf(game.lives));
 		if(!dead()) {
@@ -158,7 +163,11 @@ public class miniGame1 implements ActionListener, KeyListener {
 	            	frame.timeLeft.setText("Time's up!");
 	            	frame.totalTimeLabel.setText("Total time: " + df.format(game.totalTime));
 	                timer.stop();
-	                timerOver();
+	                try {
+						timerOver();
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
 	            }
 	            if(time < 1) {
 	            	if((time < 1.6 && time > 1.4) || (time < 1.2 && time > 1.0) || (time < 0.8 && time > 0.6) || (time < 0.4 && time > 0.2)) {
@@ -185,10 +194,20 @@ public class miniGame1 implements ActionListener, KeyListener {
 	}
 
 	public void fillGrid() {
-		for(int i = 0; i < rows; i++) {
-			for(int j = 0; j < columns; j++) {
-				char letter = ALPHABETQWOP.charAt((int) Math.round(Math.random()*(ALPHABETQWOPLENGTH-1)));
-				theGrid[i][j] = String.valueOf(letter);
+		if(game.totalTime <= 80) {
+			for(int i = 0; i < rows; i++) {
+				for(int j = 0; j < columns; j++) {
+					char letter = ALPHABETQWOP.charAt((int) Math.round(Math.random()*(ALPHABETQWOPLENGTH-1)));
+					theGrid[i][j] = String.valueOf(letter);
+				}
+			}
+		}
+		else {
+			for(int i = 0; i < rows; i++) {
+				for(int j = 0; j < columns; j++) {
+					char letter = ALPHABETQWOPHARD.charAt((int) Math.round(Math.random()*(ALPHABETQWOPHARDLENGTH-1)));
+					theGrid[i][j] = String.valueOf(letter);
+				}
 			}
 		}
 	}
