@@ -119,9 +119,10 @@ public class menu extends JFrame implements MouseListener{
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(menuItemsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(startGame, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(highscoreMenu, javax.swing.GroupLayout.Alignment.TRAILING)
+                            //.addComponent(highscoreMenu, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(playerName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE,
                             				116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(highscoreMenu, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(quit, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addContainerGap())
         );
@@ -133,9 +134,10 @@ public class menu extends JFrame implements MouseListener{
                 .addGap(30, 30, 30)
                 .addComponent(startGame, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(1, 1, 1)
-                .addComponent(highscoreMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                //.addComponent(highscoreMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(playerName, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(highscoreMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(quit)
                 .addContainerGap(227, Short.MAX_VALUE))
         );
