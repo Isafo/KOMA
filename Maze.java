@@ -203,14 +203,14 @@ public class Maze extends JFrame {
 			
 			else if(player.intersects(end)){
 				if(won == false){
-					try {
+					//try {
 						frame.dispose();
 						Game.next();
 						won = true;
-					} catch (IOException e) {
+					//} catch (IOException e) {
 						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}			
+					//	e.printStackTrace();
+					//}			
 				}
 			}
 		}
