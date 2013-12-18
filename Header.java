@@ -3,8 +3,8 @@ import java.text.DecimalFormat;
 public class Header extends javax.swing.JPanel {
 
     // Variables declaration                    
-    private javax.swing.JLabel dispTimeLabel;
-    private javax.swing.JLabel life1;
+    private static javax.swing.JLabel dispTimeLabel;
+    private static javax.swing.JLabel life1;
     private static javax.swing.JLabel life2;
     private static javax.swing.JLabel life3;
     private static javax.swing.JLabel timeLabel;
@@ -22,6 +22,12 @@ public class Header extends javax.swing.JPanel {
     	
     	else if(Game.lives == 1){
     		life2.setVisible(false);
+    	}
+    	
+    	else if(Game.lives == 0){
+    		life1.setVisible(false);
+    		dispTimeLabel.setText("");
+    		timeLabel.setText("");
     	}
     }
     

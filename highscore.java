@@ -56,7 +56,6 @@ public class highscore
 	}
 	
 	public void realSort(){
-		
 		Collections.sort(vec,new Comparator<person>(){
 			@Override
 			public int compare(person o1, person o2){

@@ -20,10 +20,12 @@ public class Game implements ActionListener, KeyListener{
 	public static int currentGame = 0;
 	public static int lastGame = 100;
 	public static Random random = new Random();
+	public static boolean transitionDone = false;
 	public static miniGame0 game0;
 	public static miniGame1 game1;
 	public static miniGame2 game2;
 	public static miniGame3 game3;
+	public static Between transition;
 	private static highscore high;
 	public static Maze maze;
 	
@@ -37,55 +39,64 @@ public class Game implements ActionListener, KeyListener{
 		runGame();	
 	}
 	
+	public static void trans() {
+		transitionDone = true;
+		Between transition = new Between();
+	}
+	
 	public static void next() {
-		gamesWithoutBonus++;
-		if(gamesWithoutBonus <= 7) {
-			do{
-				currentGame = random.nextInt(NUMBEROFGAMES);
-			}while(currentGame == lastGame);//Don't play the same gamemode twice in a row
+		if(!transitionDone) {
+			trans();
 		}
-				
-		game0 = null;
-		game1 = null;
-		game2 = null;
-		game3 = null;
-
-		if(gamesWithoutBonus <= 7) {
-			switch(currentGame) {
-			case 0:
-				try {
-					game0 = new miniGame0();
-					lastGame = 0;
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				break;
-			case 1:
-				try {
-					game1 = new miniGame1();
-					lastGame = 1;
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				break;
-			case 2:
-				try {
-					game2 = new miniGame2();
-					lastGame = 2;
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				break;
+		else if(lives > 0){
+			gamesWithoutBonus++;
+			if(gamesWithoutBonus <= 7) {
+				do{
+					currentGame = random.nextInt(NUMBEROFGAMES);
+				}while(currentGame == lastGame);//Don't play the same gamemode twice in a row
 			}
-		}
-		else {
-			try {
-				game3 = new miniGame3();
-				currentGame = 3;
-				lastGame = 3;
-				gamesWithoutBonus = 0;
-			} catch (IOException e) {
-				e.printStackTrace();
+			
+			game0 = null;
+			game1 = null;
+			game2 = null;
+			game3 = null;
+			if(gamesWithoutBonus <= 7) {
+				switch(currentGame) {
+				case 0:
+					try {
+						game0 = new miniGame0();
+						lastGame = 0;
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					break;
+				case 1:
+					try {
+						game1 = new miniGame1();
+						lastGame = 1;
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					break;
+				case 2:
+					try {
+						game2 = new miniGame2();
+						lastGame = 2;
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					break;
+				}
+			}
+			else {
+				try {
+					game3 = new miniGame3();
+					currentGame = 3;
+					lastGame = 3;
+					gamesWithoutBonus = 0;
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 	}
@@ -104,19 +115,23 @@ public class Game implements ActionListener, KeyListener{
 	}
 	
 	public void keyPressed(KeyEvent e) {
-		switch(currentGame) {
-			case 0:
-				game0.keyPressed(e);
-				break;
-			case 1:
-				game1.keyPressed(e);
-				break;
-			case 2:
-				game2.keyPressed(e);
-				break;
-			case 3:
-				game3.keyPressed(e);
-				break;
+		if(!transitionDone) {
+			switch(currentGame) {
+				case 0:
+					game0.keyPressed(e);
+					break;
+				case 1:
+					game1.keyPressed(e);
+					break;
+				case 2:
+					game2.keyPressed(e);
+					break;
+				case 3:
+					game3.keyPressed(e);
+					break;
+				default:
+					break;
+			}
 		}
     }
 

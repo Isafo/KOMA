@@ -42,6 +42,7 @@ public class miniGame2 implements ActionListener, KeyListener {
 	public static Random random = new Random();
 	
 	public miniGame2() throws IOException {		
+		Game.transitionDone = false;
 		timer = new Timer(100, new CountdownTimerListener());
 		if(!Game.firstMode) {
 			timer.start();
@@ -146,6 +147,7 @@ public class miniGame2 implements ActionListener, KeyListener {
 		else {
 			//score visas, avslutas
 			System.out.println("Final score: " + df.format(Game.totalTime));
+			Game.trans();
 			Game.saveScore();
 		}
 	}

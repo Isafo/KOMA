@@ -38,7 +38,7 @@ public class miniGame1 implements ActionListener, KeyListener {
 	public int countRows = 0, countColumns = 0;
 	
 	public miniGame1() throws IOException {
-		
+		Game.transitionDone = false;
 		timer = new Timer(100, new CountdownTimerListener());
 		if(!Game.firstMode) {
 			timer.start();
@@ -131,6 +131,7 @@ public class miniGame1 implements ActionListener, KeyListener {
 		else {
 			//score visas, avslutas
 			System.out.println("Final score: " + df.format(Game.totalTime));
+			Game.trans();
 			Game.saveScore();
 		}
 	}
