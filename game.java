@@ -39,7 +39,7 @@ public class Game implements ActionListener, KeyListener{
 	
 	public static void next() {
 		gamesWithoutBonus++;
-		if(gamesWithoutBonus <= 3) {
+		if(gamesWithoutBonus <= 7) {
 			do{
 				currentGame = random.nextInt(NUMBEROFGAMES);
 			}while(currentGame == lastGame);//Don't play the same gamemode twice in a row

@@ -13,7 +13,7 @@ import java.util.Random;
 public class miniGame3 implements ActionListener, KeyListener {
 	//timer
 	Timer timer;
-	public final double TIMECONSTANT = 30, TIMECONSTANTFIRST = 40; //now doubles ---
+	public final double TIMECONSTANT = 37, TIMECONSTANTFIRST = 47; //now doubles ---
 	public double time = TIMECONSTANT; 
 	public DecimalFormat df = new DecimalFormat("##.##");
 
@@ -30,8 +30,8 @@ public class miniGame3 implements ActionListener, KeyListener {
 	private final Color RED = new Color(245, 0, 0);
 
 	//mini Game - 3
-	public final String texts[] = {"this is a bonus mini game", "math is not as fun as programming", "koma is not the same thing as coma",
-				"complete all rows for a bonus life", "this is a good way to do instructions", "game modes become harder with time"};
+	public final String texts[] = {"this is an extra long mini game", "math is not as fun as programming", "koma is not the same thing as coma",
+				"complete all rows for next level", "this is a good way to do instructions", "game modes become harder with time", "use your keyboard"};
 	public final int TEXTSLENGTH = texts.length;
 	public String totalText = "", totalTextPlain = "";
 	public int countChar = 0, countChar2 = 0, countRows = 0;
