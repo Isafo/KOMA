@@ -204,7 +204,7 @@ public class miniGame2 implements ActionListener, KeyListener {
 		textPane.setEditable(false);
 		textPane.addKeyListener(this);
 		textPane.setFocusable(true);
-		texts[textChosen].toUpperCase();
+		// texts[textChosen].toUpperCase();
 
 		StyleConstants.setForeground(attributeSet, YELLOW);
 		StyleConstants.setUnderline(attributeSet, true);

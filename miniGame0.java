@@ -16,7 +16,7 @@ public class miniGame0 implements ActionListener, KeyListener {
 	public DecimalFormat df = new DecimalFormat("##.##");
 
 	//grid
-	public int rows = 4;
+	public int rows = 5;
 	public int columns = 4;
 	private String[][] theGrid = new String[rows][columns];
 	private JLabel[][] slots = new JLabel[rows][columns];
