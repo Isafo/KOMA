@@ -50,7 +50,8 @@ public class miniGame3 implements ActionListener, KeyListener {
 		}
 		else
 			time = TIMECONSTANTFIRST;
-		 
+		
+		Header.setTime(time);
 		setupGame();
 	}
 
@@ -95,9 +96,17 @@ public class miniGame3 implements ActionListener, KeyListener {
 				countChar2 = 0;
 				countRows++;
 			}
-			if(countRows >= 4) {
-				//Game.lives++; //win a life
-				nextGameMode();
+			if(Game.totalTime <= 180) {
+				if(countRows >= 4) {
+					//Game.lives++; //win a life
+					nextGameMode();
+				}
+			}
+			else {
+				if(countRows >= 5) {
+					//Game.lives++; //win a life
+					nextGameMode();
+				}
 			}
 			StyleConstants.setForeground(attributeSet, YELLOW);
 			StyleConstants.setUnderline(attributeSet, true);
@@ -175,14 +184,27 @@ public class miniGame3 implements ActionListener, KeyListener {
 	public JPanel createField() {
 		frame.pnlGrid.removeAll();
 		frame.pnlGrid = new JPanel();
-		for(int i = 0; i < TEXTSLENGTH-2; i++) {
-			textChosen[i] = random.nextInt(TEXTSLENGTH);
-			texts[textChosen[i]].toUpperCase();
-			if(i == 0)
-				totalText = texts[textChosen[i]];
-			else
-				totalText += "\n\n" + texts[textChosen[i]];
-			totalTextPlain += texts[textChosen[i]];
+		if(Game.totalTime <= 180) {
+			for(int i = 0; i < TEXTSLENGTH-3; i++) {
+				textChosen[i] = random.nextInt(TEXTSLENGTH);
+				texts[textChosen[i]].toUpperCase();
+				if(i == 0)
+					totalText = texts[textChosen[i]];
+				else
+					totalText += "\n\n" + texts[textChosen[i]];
+				totalTextPlain += texts[textChosen[i]];
+			}
+		} 
+		else {
+			for(int i = 0; i < TEXTSLENGTH-2; i++) {
+				textChosen[i] = random.nextInt(TEXTSLENGTH);
+				texts[textChosen[i]].toUpperCase();
+				if(i == 0)
+					totalText = texts[textChosen[i]];
+				else
+					totalText += "\n\n" + texts[textChosen[i]];
+				totalTextPlain += texts[textChosen[i]];
+			}
 		}
 //		System.out.println(totalText);
 //		System.out.println(totalTextPlain);

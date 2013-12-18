@@ -50,7 +50,7 @@ public class Game implements ActionListener, KeyListener{
 		game2 = null;
 		game3 = null;
 
-		if(gamesWithoutBonus <= 3) {
+		if(gamesWithoutBonus <= 7) {
 			switch(currentGame) {
 			case 0:
 				try {

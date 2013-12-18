@@ -9,3 +9,4 @@ Haxor               12
 Rob                 9.75                
 morgan              7                   
 simon               1                   
+Simon               284.25              
